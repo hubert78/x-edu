@@ -1,5 +1,5 @@
 import streamlit as st
 
-st.title('X-Edu')
+st.title(' :book: X-Edu')
 
 st.write('Hello world!')
