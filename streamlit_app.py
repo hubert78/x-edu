@@ -21,7 +21,7 @@ Scraped_date = str(date.today())
 submitted = st.sidebar.button('Find Tweets')
  
 
-data = scrape(words=['Bioinformatics'], since='2024-08-01', until='2024-08-09', lang='en', interval=1)
-data
+#data = scrape(words=['Bioinformatics'], since='2024-08-01', until='2024-08-09', lang='en', interval=1)
+#data
 
 
