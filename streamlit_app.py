@@ -35,7 +35,7 @@ def create_dropdown_with_custom_option(label, options):
 
 # Function for OpenAI feedback on tweet.
 def openai_feedback(test, context):
-    openai_api_key = 'sk-jFP0BdYU-oiNP-GkHELrx0f76BUYMvfwcRsi_T1UlUT3BlbkFJH_jFDibnrFrakDD62I6x4J6qn0NxBHuj3mdSFEw8wA'
+    openai.api_key = 'sk-jFP0BdYU-oiNP-GkHELrx0f76BUYMvfwcRsi_T1UlUT3BlbkFJH_jFDibnrFrakDD62I6x4J6qn0NxBHuj3mdSFEw8wA'
     
     messages = [
         {'role': 'system', 'content': 'You are a helpful assistant making judgment on tweets. Return True if the tweet meets the criteria, and False if it does not meet the criteria.'},
