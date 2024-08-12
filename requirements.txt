@@ -6,6 +6,7 @@ numpy
 datetime 
 ntscraper
 tqdm
+python-dotenv
 
 
 
