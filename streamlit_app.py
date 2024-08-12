@@ -109,6 +109,7 @@ def display_tweets(tweets_df):
     st.markdown(tweets_html, unsafe_allow_html=True)
 
 
+
 # APPLICATION STARTS HERE
 st.title('College Application Support')
 
@@ -121,7 +122,6 @@ context = create_dropdown_with_custom_option('Select an option', options)
 tweet_count = st.slider("# Number of Tweets: ", 1, 20, 10)
 start_date = st.date_input("# Start Date")
 end_date = st.date_input("# End Date")
-scraped_date = str(date.today())
 input_submit_button = st.button('Load tweets')
 
 
@@ -132,12 +132,8 @@ if input_submit_button:
         st.write('Tweets are loading...')
         scraper = Nitter(log_level=1, skip_instance_check=False)
 
-    if scraper.get_tweets():
-        st.write('This is wrong.')
-        tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
-        display_tweets(tweets)
-    else:
-        st.write('Ooops. Something went wrong. Try reloading tweets.')
+    tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
+    display_tweets(tweets)
 
 
 
