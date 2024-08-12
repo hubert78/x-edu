@@ -40,15 +40,15 @@ st.title('College Application Support')
 
 
 # Get keywords/hastags, tweet_count and date range(start and end)
-keywords = st_tags_sidebar(label='Enter Keywords:',
+keywords = st_tags(label='Enter Keywords:',
                           text='press enter to add more',
                           suggestions=['PhD', 'Masters', 'Bioinformatics', 'Fee', 'Waiver', 'Application'],
                           maxtags=3,
                           key="afrfae")
 
-tweet_count = st.sidebar.slider("# Number of Tweets: ", 1, 100, 10)
-start_date = st.sidebar.date_input("# Start Date")
-end_date = st.sidebar.date_input("# End Date")
+tweet_count = st.slider("# Number of Tweets: ", 1, 100, 10)
+start_date = st.date_input("# Start Date")
+end_date = st.date_input("# End Date")
 Scraped_date = str(date.today())
 
 
