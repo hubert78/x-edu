@@ -4,6 +4,7 @@ from datetime import date
 import pandas as pd
 
 st.title('College Application Support')
+scraper = Nitter()
 
 # Keyword/hastags, tweet count and date range(start and end)
 keyword = st_tags_sidebar(label='Enter Keywords:',
@@ -16,3 +17,4 @@ No_of_tweets = st.sidebar.slider("# Number of Tweets: ", 1, 100, 10)
 start_date = st.sidebar.date_input("# Start Date")
 end_date = st.sidebar.date_input("# End Date")
 Scraped_date = str(date.today())
+submitted = st.sidebar.button('Find Tweets')
