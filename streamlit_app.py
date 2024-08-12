@@ -34,8 +34,7 @@ def create_dropdown_with_custom_option(label, options):
         
 
 # Function for OpenAI feedback on tweet.
-def openai_feedback(test, context):
-    openai.api_key = 'sk-jFP0BdYU-oiNP-GkHELrx0f76BUYMvfwcRsi_T1UlUT3BlbkFJH_jFDibnrFrakDD62I6x4J6qn0NxBHuj3mdSFEw8wA'
+def openai_feedback(test, context, openai):
     
     messages = [
         {'role': 'system', 'content': 'You are a helpful assistant making judgment on tweets. Return True if the tweet meets the criteria, and False if it does not meet the criteria.'},
@@ -50,12 +49,12 @@ def openai_feedback(test, context):
 
 
 # Function to get tweets in a DataFrame
-def get_tweets(term, mode, num, since, until, context):
+def get_tweets(term, mode, num, since, until, context, openai):
     tweets = scraper.get_tweets(term, mode=mode, number=num, since=since, until=until)
     
     final_tweets = []
     for tweet in tweets['tweets']:
-        if openai_feedback(tweet['text'], context) == 'True':
+        if openai_feedback(tweet['text'], context, openai) == 'True':
             tweet_data = [
                 tweet['user']['username'], tweet['user']['name'], tweet['user']['avatar'],
                 tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'],
@@ -112,6 +111,7 @@ def display_tweets(tweets_df):
 st.title('College Application Support')
 
 options = ['College admissions', 'Application fee waiver', 'Cold email', 'Other']
+openai.api_key = 'sk-jFP0BdYU-oiNP-GkHELrx0f76BUYMvfwcRsi_T1UlUT3BlbkFJH_jFDibnrFrakDD62I6x4J6qn0NxBHuj3mdSFEw8wA'
 
 # Get keywords/hastags, tweet_count and date range(start and end)
 keywords = st.text_input('Enter Keywords')
