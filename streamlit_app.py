@@ -4,7 +4,7 @@ from datetime import date
 import pandas as pd
 from ntscraper import Nitter
 import sys
-import os
+import contextlib
 
 st.title('College Application Support')
 
@@ -22,15 +22,18 @@ end_date = st.sidebar.date_input("# End Date")
 Scraped_date = str(date.today())
 submitted = st.sidebar.button('Find Tweets')
 
-# Redirect stderr to null to avoid tqdm issues
-original_stderr = sys.stderr
-sys.stderr = open(os.devnull, 'w')
 
-# Initialize the scraper
-scraper = Nitter(log_level=None, skip_instance_check=False)
+@contextlib.contextmanager
+def suppress_tqdm():
+    original_stdout = sys.stdout
+    sys.stdout = open('/dev/null', 'w')
+    try:
+        yield
+    finally:
+        sys.stdout = original_stdout
 
-# Restore original stderr
-sys.stderr = original_stderr
+with suppress_tqdm():
+    scraper = Nitter(log_level=None, skip_instance_check=False)
 
  
 
