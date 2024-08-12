@@ -10,7 +10,7 @@ hashtag = st_tags_sidebar(label='Add Hashtag or Keywords',
                           text='press enter to add more',
                           suggestion=['PhD', 'Fee', 'Waiver'],
                           maxtags=3,
-                          key='1')
+                          key='afrfae')
 
 keyword = st_tags_sidebar(label='# Enter Keywords:',
                           text='Press enter to add more',
