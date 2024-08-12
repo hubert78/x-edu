@@ -16,11 +16,7 @@ def suppress_tqdm():
     finally:
         sys.stdout = original_stdout
 
-with suppress_tqdm():
-    st.write('App is loading...')
-    scraper = Nitter(log_level=1, skip_instance_check=False)
-      
-  
+
 # Function to get tweets in a DataFrame
 def get_tweets(term, mode, num, since, until):
     tweets = scraper.get_tweets(term, mode=mode, number=num, since=since, until=until)
@@ -28,19 +24,24 @@ def get_tweets(term, mode, num, since, until):
     final_tweets = []
     for tweet in tweets['tweets']:
         tweet_data = [
-            tweet['user']['username'], tweet['user']['avatar'],
+            tweet['user']['username'], tweet['user']['name'], tweet['user']['avatar'],
             tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'],
             tweet['pictures']]
         final_tweets.append(tweet_data)
     
     columns = [
-        'username', 'avatar', 'link', 'text', 'date', 'likes', 'pictures'
+        'username', 'name', 'avatar', 'link', 'text', 'date', 'likes', 'pictures'
     ]
     
     return pd.DataFrame(final_tweets, columns=columns)
 
 # APPLICATION STARTS HERE
 st.title('College Application Support')
+
+# Load Nitter
+with suppress_tqdm():
+    st.write('App is loading...')
+    scraper = Nitter(log_level=1, skip_instance_check=False)
 
 
 # Get keywords/hastags, tweet_count and date range(start and end)
