@@ -39,9 +39,9 @@ def get_tweets(term, mode, num, since, until):
 st.title('College Application Support')
 
 # Load Nitter
-#with suppress_tqdm():
-#    st.write('App is loading...')
-#    scraper = Nitter(log_level=1, skip_instance_check=False)
+with suppress_tqdm():
+    st.write('App is loading...')
+    scraper = Nitter(log_level=1, skip_instance_check=False)
 
 
 # Get keywords/hastags, tweet_count and date range(start and end)
@@ -53,7 +53,8 @@ scraped_date = str(date.today())
 input_submit_button = st.button('Find Tweets')
 
 # When When Input Submission Button is clicked
-if input_submit_button:    
+if input_submit_button:
+    st.write('Loading tweets...')
     tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date))
     st.write(tweets)
 
