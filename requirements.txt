@@ -3,5 +3,4 @@ streamlit_tags
 pandas
 numpy
 datetime 
-ntscraper
-nitter
+Scweet==1.8
