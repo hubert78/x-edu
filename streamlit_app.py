@@ -6,13 +6,15 @@ import pandas as pd
 st.title('College Application Support')
 
 # Keyword/hastags, tweet count and date range(start and end)
-Hashtag = st.sidebar.st_tags(
-  label = 'Add Hashtag or Keywords',
-  text = 'press enter to add more',
-  suggestion = ['PhD', 'Fee', 'Waiver'],
-  maxtags = 3,
-  key = 'hash'
-)
+hast_tag_row = st.slider
+with hast_tag_row:
+  Hashtag = st_tags(
+    label = 'Add Hashtag or Keywords',
+    text = 'press enter to add more',
+    suggestion = ['PhD', 'Fee', 'Waiver'],
+    maxtags = 3,
+    key = 'hash'
+  )
 
 No_of_tweets = st.sidebar.slider("Number of Tweets: ", 1, 100, 10)
 start_date = st.sidebar.date_input("Start Date")
