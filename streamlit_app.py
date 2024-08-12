@@ -3,7 +3,7 @@ from streamlit_tags import st_tags, st_tags_sidebar
 from datetime import date
 import pandas as pd
 from ntscraper import Nitter
-import openai
+from openai import OpenAI
 import sys
 import contextlib
 
@@ -35,16 +35,15 @@ def create_dropdown_with_custom_option(label, options):
 
 # Function for OpenAI feedback on tweet.
 def openai_feedback(test, context):
-    openai.api_key = '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'
+    openai_api_key = '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'
+    client = OpenAI(api_key=openai_api_key)
+    
     
     messages = [
-        {'role': 'system', 'content': 'You are a helpful assistant making judgment on tweets. Return True if the tweet meets the criteria, and False if it does not meet the criteria.'}
+        {'role': 'system', 'content': 'You are a helpful assistant making judgment on tweets. Return True if the tweet meets the criteria, and False if it does not meet the criteria.'},
+        {'role': 'user', 'content': f'Does did tweet talk about {context}: {test}. Return True or False'}
     ]
-    
-    test = f'Does did tweet talk about {context}: {test}. Return True or False'
-    messages.append({'role': 'user', 'content': test})
-    
-    chat = openai.ChatCompletion.create(model='gpt-4o-mini', messages=messages)
+    chat = client.chat.completions.create(model='gpt-4o-mini', messages=messages)
     return chat.choices[0].message.content
 
 
