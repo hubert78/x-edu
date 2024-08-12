@@ -50,18 +50,15 @@ input_submit_button = st.button('Find Tweets')
 
 
 
-#with suppress_tqdm():
-#    scraper = Nitter(log_level=1, skip_instance_check=False)
+with suppress_tqdm():
+    scraper = Nitter(log_level=1, skip_instance_check=False)
 
-st.write(keywords)
+st.write('App is loading...')
 
 # When When Input Submission Button is clicked
 if input_submit_button:    
-    st.write('App is loading...')
-    date_string = start_date.strftime("%Y-%m-%d")
-    st.write(date_string)
-    #tweets = get_tweets(keywords, 'term', tweet_count, start_date, end_date)
-    #st.write(tweets)
+    tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date))
+    st.write(tweets)
 
 
 
