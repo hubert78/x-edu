@@ -33,7 +33,7 @@ def suppress_tqdm():
         sys.stdout = original_stdout
 
 with suppress_tqdm():
-    scraper = Nitter(log_level=None, skip_instance_check=False)
+    scraper = Nitter(log_level=1, skip_instance_check=False)
 
  
 
