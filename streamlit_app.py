@@ -47,8 +47,8 @@ keywords = st_tags_sidebar(label='Enter Keywords:',
                           key="afrfae")
 
 tweet_count = st.sidebar.slider("# Number of Tweets: ", 1, 100, 10)
-start_date = str(st.sidebar.date_input("# Start Date"))
-end_date = str(st.sidebar.date_input("# End Date"))
+start_date = st.sidebar.date_input("# Start Date")
+end_date = st.sidebar.date_input("# End Date")
 Scraped_date = str(date.today())
 
 
@@ -58,6 +58,7 @@ with suppress_tqdm():
     scraper = Nitter(log_level=1, skip_instance_check=False)
 
 st.subheader('Application Starts Now')
+st.write(start_date)
 
 # When When Input Submission Button is clicked
 if input_submit_button:
