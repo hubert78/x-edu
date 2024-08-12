@@ -1,6 +1,6 @@
 streamlit
 streamlit_tags 
-openai==0.28
+openai
 pandas
 numpy
 datetime 
