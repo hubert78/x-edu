@@ -4,13 +4,6 @@ from datetime import date
 import pandas as pd
 from ntscraper import Nitter
 
-from tqdm import tqdm
-import sys
-
-# Simple test to see if tqdm works independently
-for _ in tqdm(range(10), desc="Testing tqdm"):
-    pass
-
 st.title('College Application Support')
 scraper = Nitter()
 
