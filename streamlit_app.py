@@ -58,6 +58,8 @@ st.write(keywords)
 # When When Input Submission Button is clicked
 if input_submit_button:    
     st.write('App is loading...')
+    date_string = start_date.strftime("%Y-%m-%d %H:%M:%S")
+    st.write(date_string)
     #tweets = get_tweets(keywords, 'term', tweet_count, start_date, end_date)
     #st.write(tweets)
 
