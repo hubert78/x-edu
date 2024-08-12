@@ -7,7 +7,7 @@ import openai
 import sys
 import contextlib
 
-openai.api_key = 'sk-jFP0BdYU-oiNP-GkHELrx0f76BUYMvfwcRsi_T1UlUT3BlbkFJH_jFDibnrFrakDD62I6x4J6qn0NxBHuj3mdSFEw8wA'
+openai.api_key = 'sk-UAXiEV21prGRz7yaILA34ErrFF-Ec7XwE9IBkYY2lVT3BlbkFJ7X7sRcvl-01fTN0cNoCy4UI4taghrl8pc5Mi9yzCIA'
 
 # Function to suppress the sys print output of ntscraper
 @contextlib.contextmanager
