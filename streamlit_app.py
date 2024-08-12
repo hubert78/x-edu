@@ -2,10 +2,9 @@ import streamlit as st
 from streamlit_tags import st_tags, st_tags_sidebar
 from datetime import date
 import pandas as pd
-#from ntscraper import Nitter
+from ntscraper import Nitter
 
 st.title('College Application Support')
-#scraper = Nitter()
 
 # Keyword/hastags, tweet count and date range(start and end)
 keyword = st_tags_sidebar(label='Enter Keywords:',
@@ -20,6 +19,7 @@ end_date = st.sidebar.date_input("# End Date")
 Scraped_date = str(date.today())
 submitted = st.sidebar.button('Find Tweets')
 
+#scraper = Nitter()
  
 
 
