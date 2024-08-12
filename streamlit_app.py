@@ -38,28 +38,31 @@ def get_tweets(term, mode, num, since, until):
 # APPLICATION STARTS HERE
 st.title('College Application Support')
 
-print('---------------- Hello World-------------------------------------------')
-# Keyword/hastags, tweet count and date range(start and end)
+
+# Get keywords/hastags, tweet_count and date range(start and end)
 keywords = st_tags_sidebar(label='Enter Keywords:',
                           text='press enter to add more',
                           suggestions=['PhD', 'Masters', 'Bioinformatics', 'Fee', 'Waiver', 'Application'],
                           maxtags=3,
                           key="afrfae")
 
-num_of_tweets = st.sidebar.slider("# Number of Tweets: ", 1, 100, 10)
+tweet_count = st.sidebar.slider("# Number of Tweets: ", 1, 100, 10)
 start_date = str(st.sidebar.date_input("# Start Date"))
 end_date = str(st.sidebar.date_input("# End Date"))
 Scraped_date = str(date.today())
-submitted = st.sidebar.button('Find Tweets')
 
+
+input_submit_button = st.sidebar.button('Find Tweets')
 
 with suppress_tqdm():
     scraper = Nitter(log_level=1, skip_instance_check=False)
 
 st.subheader('Application Starts Now')
 
-tweets = get_tweets(keywords, 'term', num_of_tweets, start_date, end_date)
-st.write(tweets)
+# When When Input Submission Button is clicked
+if input_submit_button:
+    tweets = get_tweets(keywords, 'term', tweet_count, start_date, end_date)
+    st.write(tweets)
 
 
 
