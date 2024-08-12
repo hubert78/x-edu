@@ -13,7 +13,7 @@ keyword = st_tags_sidebar(label='# Enter Keywords:',
                           maxtags=3,
                           key="afrfae")
 
-No_of_tweets = st.sidebar.slider("Number of Tweets: ", 1, 100, 10)
-start_date = st.sidebar.date_input("Start Date")
-end_date = st.sidebar.date_input("End Date")
+No_of_tweets = st.sidebar.slider("# Number of Tweets: ", 1, 100, 10)
+start_date = st.sidebar.date_input("# Start Date")
+end_date = st.sidebar.date_input("# End Date")
 Scraped_date = str(date.today())
