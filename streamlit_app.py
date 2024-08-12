@@ -3,7 +3,7 @@ from streamlit_tags import st_tags, st_tags_sidebar
 from datetime import date
 import pandas as pd
 from ntscraper import Nitter
-from openai import OpenAI
+import openai
 import sys
 import contextlib
 
@@ -35,15 +35,17 @@ def create_dropdown_with_custom_option(label, options):
 
 # Function for OpenAI feedback on tweet.
 def openai_feedback(test, context):
-    openai_api_key = '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'
-    client = OpenAI(api_key=openai_api_key)
-    
+    openai_api_key = 'sk-jFP0BdYU-oiNP-GkHELrx0f76BUYMvfwcRsi_T1UlUT3BlbkFJH_jFDibnrFrakDD62I6x4J6qn0NxBHuj3mdSFEw8wA'
     
     messages = [
         {'role': 'system', 'content': 'You are a helpful assistant making judgment on tweets. Return True if the tweet meets the criteria, and False if it does not meet the criteria.'},
-        {'role': 'user', 'content': f'Does did tweet talk about {context}: {test}. Return True or False'}
+        {'role': 'user', 'content': f'Does this tweet talk explicitly about {context}: {test}. Return True or False'}
     ]
-    chat = client.chat.completions.create(model='gpt-4o-mini', messages=messages)
+
+    response = openai.ChatCompletion.create(
+        model='gpt-3.5-turbo',
+        messages=messages
+    )
     return chat.choices[0].message.content
 
 
@@ -109,7 +111,7 @@ def display_tweets(tweets_df):
 # APPLICATION STARTS HERE
 st.title('College Application Support')
 
-options = ['College application', 'Application fee waiver', 'Cold email', 'Other']
+options = ['College admissions', 'Application fee waiver', 'Cold email', 'Other']
 
 # Get keywords/hastags, tweet_count and date range(start and end)
 keywords = st.text_input('Enter Keywords')
