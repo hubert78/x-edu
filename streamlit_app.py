@@ -11,7 +11,7 @@ import sys
 
 
 # APPLICATION STARTS HERE
-st.title('FUCK YOU!!!!!!!!!!!!!!!!!')
+st.title('FUCK YOU!!!!!!!!!!!!!!!!!!')
 
 
 
