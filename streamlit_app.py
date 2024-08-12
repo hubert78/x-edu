@@ -5,9 +5,12 @@ import pandas as pd
 from ntscraper import Nitter
 import openai
 import sys
+import os
 import contextlib
+from dotenv import load_dotenv
 
-openai.api_key = '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'
+def configure():
+    load_dotenv()
 
 # Function to suppress the sys print output of ntscraper
 @contextlib.contextmanager
@@ -33,21 +36,6 @@ def create_dropdown_with_custom_option(label, options):
             return 'None'
     else:
         return selected_option
-        
-
-# Function for OpenAI feedback on tweet.
-def openai_feedback(test, context):
-    
-    messages = [
-        {'role': 'system', 'content': 'You are a helpful assistant making judgment on tweets. Return True if the tweet meets the criteria, and False if it does not meet the criteria.'},
-        {'role': 'user', 'content': f'Does this tweet talk explicitly about {context}: {test}. Return True or False'}
-    ]
-
-    response = openai.ChatCompletion.create(
-        model='gpt-3.5-turbo',
-        messages=messages
-    )
-    return chat.choices[0].message.content
 
 
 # Function to get tweets in a DataFrame
@@ -56,11 +44,11 @@ def get_tweets(term, mode, num, since, until, context):
     
     final_tweets = []
     for tweet in tweets['tweets']:
-        if openai_feedback(tweet['text'], context) == 'True':
-            tweet_data = [
-                tweet['user']['username'], tweet['user']['name'], tweet['user']['avatar'],
-                tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'],
-                tweet['pictures']]
+        #if openai_feedback(tweet['text'], context) == 'True':
+        tweet_data = [
+            tweet['user']['username'], tweet['user']['name'], tweet['user']['avatar'],
+            tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'],
+            tweet['pictures']]
             final_tweets.append(tweet_data)
     
     columns = [
@@ -114,6 +102,7 @@ def display_tweets(tweets_df):
 st.title('College Application Support')
 
 options = ['College admissions', 'Application fee waiver', 'Cold email', 'Other']
+#configure()
 
 
 # Get keywords/hastags, tweet_count and date range(start and end)
