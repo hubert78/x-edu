@@ -3,4 +3,4 @@ streamlit_tags
 pandas
 numpy
 datetime 
-Scweet==1.8
+twscrape
