@@ -18,6 +18,7 @@ def suppress_tqdm():
   
 # Function to get tweets in a DataFrame
 def get_tweets(term, mode, num, since, until):
+    @contextlib.contextmanager
     with suppress_tqdm():  
       tweets = scraper.get_tweets(term, mode=mode, number=num, since=since, until=until)
     
@@ -54,7 +55,7 @@ input_submit_button = st.button('Find Tweets')
 
 
 
-
+@contextlib.contextmanager
 with suppress_tqdm():
     scraper = Nitter(log_level=1, skip_instance_check=False)
 
