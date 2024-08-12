@@ -3,6 +3,7 @@ from streamlit_tags import st_tags, st_tags_sidebar
 from datetime import date
 import pandas as pd
 from ntscraper import Nitter
+import openai
 import sys
 import contextlib
 
@@ -16,18 +17,48 @@ def suppress_tqdm():
     finally:
         sys.stdout = original_stdout
 
+#Function to create dropdown menu for criteria selection
+def create_dropdown_with_custom_option(label, options):
+    selected_option = st.selectbox(label, options)
 
+    if selected_option == 'Other':
+        custom_option = st.text_input('Please specify:')
+
+        if custom_option:
+            option.append(custom_option)
+            return custom_option
+        else:
+            return 'None'
+    else:
+        return selected_option
+        
+
+# Function for OpenAI feedback on tweet.
+def openai_feedback(test, context):
+    openai.api_key = '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'
+    
+    messages = [
+        {'role': 'system', 'content': 'You are a helpful assistant making judgment on tweets. Return True if the tweet meets the criteria, and False if it does not meet the criteria.'}
+    ]
+    
+    test = f'Does did tweet talk about {context}: {test}. Return True or False'
+    messages.append({'role': 'user', 'content': test})
+    
+    chat = openai.ChatCompletion.create(model='gpt-4o', messages=messages)
+    return chat.choices[0].message.content
+    
 # Function to get tweets in a DataFrame
-def get_tweets(term, mode, num, since, until):
+def get_tweets(term, mode, num, since, until, context):
     tweets = scraper.get_tweets(term, mode=mode, number=num, since=since, until=until)
     
     final_tweets = []
     for tweet in tweets['tweets']:
-        tweet_data = [
-            tweet['user']['username'], tweet['user']['name'], tweet['user']['avatar'],
-            tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'],
-            tweet['pictures']]
-        final_tweets.append(tweet_data)
+        if openai_feedback(tweet['text'], context) == 'True'
+            tweet_data = [
+                tweet['user']['username'], tweet['user']['name'], tweet['user']['avatar'],
+                tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'],
+                tweet['pictures']]
+            final_tweets.append(tweet_data)
     
     columns = [
         'username', 'name', 'avatar', 'link', 'text', 'date', 'likes', 'pictures'
@@ -77,15 +108,16 @@ def display_tweets(tweets_df):
 # APPLICATION STARTS HERE
 st.title('College Application Support')
 
+options = ['College application', 'Application fee waiver', 'Cold email', 'Other']
 
 # Get keywords/hastags, tweet_count and date range(start and end)
 keywords = st.text_input('Enter Keywords')
+context = create_dropdown_with_custom_option('Select an option', options)
 tweet_count = st.slider("# Number of Tweets: ", 1, 20, 10)
 start_date = st.date_input("# Start Date")
 end_date = st.date_input("# End Date")
 scraped_date = str(date.today())
 input_submit_button = st.button('Load tweets')
-
 
 
 # When When Input Submission Button is clicked
@@ -95,7 +127,7 @@ if input_submit_button:
         st.write('Tweets are loading...')
         scraper = Nitter(log_level=1, skip_instance_check=False)
 
-    tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date))
+    tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
     display_tweets(tweets)
 
 
