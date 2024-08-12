@@ -3,4 +3,6 @@ streamlit_tags
 pandas
 numpy
 datetime 
+tweepy
+ntscraper
 twscrape
