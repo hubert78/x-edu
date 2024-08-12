@@ -7,11 +7,11 @@ st.title('College Application Support')
 
 # Keyword/hastags, tweet count and date range(start and end)
 Hashtag = st_tags_sidebar(
-  label = 'Add Hashtag or Keywords',
-  text = 'press enter to add more',
-  suggestion = ['PhD', 'Fee', 'Waiver'],
-  maxtags = 3,
-  key = 'hash'
+  label='Add Hashtag or Keywords',
+  text='press enter to add more',
+  suggestion=['PhD', 'Fee', 'Waiver'],
+  maxtags=3,
+  key='1'
 )
 
 No_of_tweets = st.sidebar.slider("Number of Tweets: ", 1, 100, 10)
