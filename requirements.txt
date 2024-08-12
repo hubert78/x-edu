@@ -5,5 +5,4 @@ numpy
 datetime 
 ntscraper
 tqdm
-sys
 os
