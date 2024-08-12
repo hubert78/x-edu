@@ -19,7 +19,7 @@ end_date = st.sidebar.date_input("# End Date")
 Scraped_date = str(date.today())
 submitted = st.sidebar.button('Find Tweets')
 
-#scraper = Nitter()
+scraper = Nitter()
  
 
 
