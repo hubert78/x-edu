@@ -44,9 +44,10 @@ def openai_feedback(test, context):
     test = f'Does did tweet talk about {context}: {test}. Return True or False'
     messages.append({'role': 'user', 'content': test})
     
-    chat = openai.ChatCompletion.create(model='gpt-4o', messages=messages)
+    chat = openai.ChatCompletion.create(model='gpt-4', messages=messages)
     return chat.choices[0].message.content
-    
+
+
 # Function to get tweets in a DataFrame
 def get_tweets(term, mode, num, since, until, context):
     tweets = scraper.get_tweets(term, mode=mode, number=num, since=since, until=until)
@@ -65,6 +66,7 @@ def get_tweets(term, mode, num, since, until, context):
     ]
     
     return pd.DataFrame(final_tweets, columns=columns)
+
 
 # Function to build twitter-like rows.
 def display_tweets(tweets_df):
