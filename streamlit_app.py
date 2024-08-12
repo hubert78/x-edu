@@ -6,6 +6,7 @@ from ntscraper import Nitter
 
 st.title('College Application Support')
 
+print('---------------- Hello World-------------------------------------------')
 # Keyword/hastags, tweet count and date range(start and end)
 keyword = st_tags_sidebar(label='Enter Keywords:',
                           text='press enter to add more',
@@ -19,7 +20,7 @@ end_date = st.sidebar.date_input("# End Date")
 Scraped_date = str(date.today())
 submitted = st.sidebar.button('Find Tweets')
 
-scraper = Nitter(log_level=None, skip_instance_check=False)
+#scraper = Nitter(log_level=None, skip_instance_check=False)
  
 
 
