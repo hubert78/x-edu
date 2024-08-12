@@ -62,7 +62,7 @@ st.write(start_date)
 
 # When When Input Submission Button is clicked
 if input_submit_button:
-    st.write(start_date)
+    str(st.write(start_date))
     #tweets = get_tweets(keywords, 'term', tweet_count, start_date, end_date)
     #st.write(tweets)
 
