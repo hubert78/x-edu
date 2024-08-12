@@ -4,4 +4,3 @@ pandas
 numpy
 datetime 
 ntscraper
-tqdm
