@@ -4,36 +4,11 @@ from datetime import date
 import pandas as pd
 from ntscraper import Nitter
 import sys
-import contextlib
+#import contextlib
 
-# Function to suppress the sys print output of ntscraper
-@contextlib.contextmanager
-def suppress_tqdm():
-    original_stdout = sys.stdout
-    sys.stdout = open('/dev/null', 'w')
-    try:
-        yield
-    finally:
-        sys.stdout = original_stdout
+
   
-# Function to get tweets in a DataFrame
-def get_tweets(term, mode, num, since, until):
-    with suppress_tqdm():  
-      tweets = scraper.get_tweets(term, mode=mode, number=num, since=since, until=until)
-    
-    final_tweets = []
-    for tweet in tweets['tweets']:
-        tweet_data = [
-            tweet['user']['username'], tweet['user']['name'], tweet['user']['avatar'],
-            tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'],
-            tweet['pictures']]
-        final_tweets.append(tweet_data)
-    
-    columns = [
-        'username', 'user', 'avatar', 'link', 'text', 'date', 'likes', 'pictures'
-    ]
-    
-    return pd.DataFrame(final_tweets, columns=columns)
+
 
 # APPLICATION STARTS HERE
 st.title('College Application Support')
