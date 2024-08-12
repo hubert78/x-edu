@@ -55,7 +55,7 @@ if input_submit_button:
         # Check if the scraper is already in session state
     if 'scraper' not in st.session_state:
         with suppress_tqdm():
-            st.write('App is loading...')
+            st.write('Loading tweets...')
             st.session_state.scraper = Nitter(log_level=1, skip_instance_check=False)
     
     # Retrieve the scraper from session state
