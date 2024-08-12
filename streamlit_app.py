@@ -6,7 +6,7 @@ from ntscraper import Nitter
 
 
 st.title('College Application Support')
-scraper = Nitter(log_level=1, skip_instance_check=False)
+scraper = Nitter()
 
 # Keyword/hastags, tweet count and date range(start and end)
 keyword = st_tags_sidebar(label='Enter Keywords:',
