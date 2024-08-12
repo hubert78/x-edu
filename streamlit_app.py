@@ -3,6 +3,8 @@ from streamlit_tags import st_tags, st_tags_sidebar
 from datetime import date
 import pandas as pd
 from ntscraper import Nitter
+import sys
+import os
 
 st.title('College Application Support')
 
@@ -20,7 +22,17 @@ end_date = st.sidebar.date_input("# End Date")
 Scraped_date = str(date.today())
 submitted = st.sidebar.button('Find Tweets')
 
-#scraper = Nitter(log_level=None, skip_instance_check=False)
+# Redirect stderr to null to avoid tqdm issues
+original_stderr = sys.stderr
+sys.stderr = open(os.devnull, 'w')
+
+# Initialize the scraper
+scraper = Nitter(log_level=0, skip_instance_check=False)
+
+# Restore original stderr
+sys.stderr = original_stderr
+
+scraper = Nitter(log_level=None, skip_instance_check=False)
  
 
 
