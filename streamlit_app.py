@@ -49,22 +49,18 @@ keywords = st_tags(label='Enter Keywords:',
 tweet_count = st.slider("# Number of Tweets: ", 1, 100, 10)
 start_date = st.date_input("# Start Date")
 end_date = st.date_input("# End Date")
-Scraped_date = str(date.today())
-
-
+scraped_date = str(date.today())
 input_submit_button = st.button('Find Tweets')
 
-#with suppress_tqdm():
-#    scraper = Nitter(log_level=1, skip_instance_check=False)
-
-st.subheader('Application Starts Now')
-st.write(start_date)
 
 # When When Input Submission Button is clicked
 if input_submit_button:
-    str(st.write(start_date))
-    #tweets = get_tweets(keywords, 'term', tweet_count, start_date, end_date)
-    #st.write(tweets)
+    with suppress_tqdm():
+        scraper = Nitter(log_level=1, skip_instance_check=False)
+    
+    st.write('App is loading...)
+    tweets = get_tweets(keywords, 'term', tweet_count, start_date, end_date)
+    st.write(tweets)
 
 
 
