@@ -49,7 +49,7 @@ def get_tweets(term, mode, num, since, until, context):
             tweet['user']['username'], tweet['user']['name'], tweet['user']['avatar'],
             tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'],
             tweet['pictures']]
-            final_tweets.append(tweet_data)
+        final_tweets.append(tweet_data)
     
     columns = [
         'username', 'name', 'avatar', 'link', 'text', 'date', 'likes', 'pictures'
