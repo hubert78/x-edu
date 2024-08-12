@@ -18,7 +18,7 @@ keyword = st_tags_sidebar(label='# Enter Keywords:',
                           text='Press enter to add more',
                           value=['Zero', 'One', 'Two'],
                           suggestions=['five', 'six', 'seven', 'eight', 'nine', 'three', 'eleven', 'ten', 'four'],
-                          maxtags=maxtags_sidebar,
+                          maxtags=3,
                           key="afrfae")
 
 No_of_tweets = st.sidebar.slider("Number of Tweets: ", 1, 100, 10)
