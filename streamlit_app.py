@@ -27,7 +27,7 @@ original_stderr = sys.stderr
 sys.stderr = open(os.devnull, 'w')
 
 # Initialize the scraper
-scraper = Nitter(log_level=0, skip_instance_check=False)
+scraper = Nitter(log_level=None, skip_instance_check=False)
 
 # Restore original stderr
 sys.stderr = original_stderr
