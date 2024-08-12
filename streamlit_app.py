@@ -6,9 +6,8 @@ import pandas as pd
 st.title('College Application Support')
 
 # Keyword/hastags, tweet count and date range(start and end)
-keyword = st_tags_sidebar(label='# Enter Keywords:',
+keyword = st_tags_sidebar(label='Enter Keywords:',
                           text='press enter to add more',
-                          #value=['PhD', 'Fee', 'Waiver'],
                           suggestions=['PhD', 'Masters', 'Bioinformatics', 'Fee', 'Waiver', 'Application'],
                           maxtags=3,
                           key="afrfae")
