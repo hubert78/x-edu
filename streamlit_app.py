@@ -32,7 +32,6 @@ scraper = Nitter(log_level=0, skip_instance_check=False)
 # Restore original stderr
 sys.stderr = original_stderr
 
-scraper = Nitter(log_level=0)
  
 
 
