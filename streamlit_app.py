@@ -6,19 +6,10 @@ from ntscraper import Nitter
 import sys
 import contextlib
 
-# Function to suppress the sys print output of ntscraper
-@contextlib.contextmanager
-def suppress_tqdm():
-    original_stdout = sys.stdout
-    sys.stdout = open('/dev/null', 'w')
-    try:
-        yield
-    finally:
-        sys.stdout = original_stdout
+
   
 # Function to get tweets in a DataFrame
 def get_tweets(term, mode, num, since, until):
-    @contextlib.contextmanager
     with suppress_tqdm():  
       tweets = scraper.get_tweets(term, mode=mode, number=num, since=since, until=until)
     
@@ -55,7 +46,16 @@ input_submit_button = st.button('Find Tweets')
 
 
 
+# Function to suppress the sys print output of ntscraper
 @contextlib.contextmanager
+def suppress_tqdm():
+    original_stdout = sys.stdout
+    sys.stdout = open('/dev/null', 'w')
+    try:
+        yield
+    finally:
+        sys.stdout = original_stdout
+        
 with suppress_tqdm():
     scraper = Nitter(log_level=1, skip_instance_check=False)
 
