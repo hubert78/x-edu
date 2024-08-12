@@ -130,7 +130,10 @@ if input_submit_button:
     # Load Nitter
     with suppress_tqdm():
         st.write('Tweets are loading...')
-        scraper = Nitter(log_level=1, skip_instance_check=False)
+        Try:
+            scraper = Nitter(log_level=1, skip_instance_check=False)
+        Except:
+            st.write('Ooops. Something went wrong. Try reloading tweets.')
 
     tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
     display_tweets(tweets)
