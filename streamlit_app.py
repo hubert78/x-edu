@@ -35,6 +35,45 @@ def get_tweets(term, mode, num, since, until):
     
     return pd.DataFrame(final_tweets, columns=columns)
 
+# Function to build twitter-like rows.
+def display_tweets(tweets_df):
+    # Define a template for each tweet's HTML
+    tweet_template = """
+    <div style="border: 1px solid #e1e8ed; border-radius: 10px; padding: 15px; margin-bottom: 10px; background-color: #ffffff;">
+        <div style="display: flex; align-items: center;">
+            <img src="{avatar}" alt="{username}" style="border-radius: 50%; width: 50px; height: 50px; margin-right: 10px;">
+            <div>
+                <strong>{username}</strong> <span style="color: #657786;">@{userid}</span>
+                <br>
+                <span style="color: #657786;">{date}</span>
+            </div>
+        </div>
+        <p style="margin-top: 10px;">{text}</p>
+        <div style="margin-top: 10px;">
+            <a href="{link}" target="_blank" style="color: #1da1f2;">View Tweet</a> • 
+            <span style="color: #657786;">{likes} Likes</span>
+        </div>
+    </div>
+    """
+
+    # Loop through each tweet in the DataFrame and format it using the template
+    tweets_html = ""
+    for _, row in tweets_df.iterrows():
+        tweet_html = tweet_template.format(
+            avatar=row['avatar'],
+            username=row['username'],
+            userid=row['name'],  # Assuming userid and username are the same
+            date=row['date'],
+            text=row['text'],
+            link=row['link'],
+            likes=row['likes']
+        )
+        tweets_html += tweet_html
+
+    # Display the tweets HTML in Streamlit
+    st.markdown(tweets_html, unsafe_allow_html=True)
+
+
 # APPLICATION STARTS HERE
 st.title('College Application Support')
 
@@ -57,7 +96,7 @@ if input_submit_button:
         scraper = Nitter(log_level=1, skip_instance_check=False)
 
     tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date))
-    st.write(tweets)
+    display_tweets(info_data)
 
 
 
