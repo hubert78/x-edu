@@ -44,7 +44,7 @@ def openai_feedback(test, context):
     test = f'Does did tweet talk about {context}: {test}. Return True or False'
     messages.append({'role': 'user', 'content': test})
     
-    chat = openai.ChatCompletion.create(model='gpt-3.5-turbo', messages=messages)
+    chat = openai.ChatCompletion.create(model='gpt-4o-mini', messages=messages)
     return chat.choices[0].message.content
 
 
