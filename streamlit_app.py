@@ -153,7 +153,7 @@ with load_twt_col:
 
 # State management for save button
 if 'save_button' not in st.session_state:
-    st.session_state.save_button = False
+    st.session_state.save_button = pd.DataFrame()
 
 # State management for 'loaded_tweets'
 if 'loaded_tweets' not in st.session_state:
@@ -176,7 +176,7 @@ if input_submit_button:
         # Present the user with a button to save the tweets to file.
         save_dl_twts = st.button('Save tweets')
         if save_dl_twts:
-            st.session_state.save_button = True
+            st.session_state.save_button = dl_tweets
 
 
     
