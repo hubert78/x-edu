@@ -26,7 +26,7 @@ def suppress_tqdm():
 def create_dropdown_with_custom_option(label, options):
     selected_option = st.selectbox(label, options)
 
-    if selected_option in ['Other', 'Type new key':
+    if selected_option in ['Other', 'Type new key']:
         custom_option = st.text_input('Please specify:')
 
         if custom_option:
@@ -190,7 +190,7 @@ if 'save_tweet' in st.session_state and not None and not st.session_state.save_t
     save_keywords = st.session_state.save_tweet['keyword'].unique()
     #with keyword_selector: 
     selected_keyword = create_dropdown_with_custom_option('Select a keyword. Example: Biology', save_keywords)
-    st.session_state.save_tweet['keyword'] = st.session_state.save_tweet['keyword'].replace({'None':selected_keyword})
+    st.session_state.save_tweet['keyword'] = st.session_state.save_tweet['keyword'].replace({'Type new key':selected_keyword})
 
     if st.button('Save tweets'):
         append_to_csv(st.session_state.save_tweet, 'tweets.csv')  
