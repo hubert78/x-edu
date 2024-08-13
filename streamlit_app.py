@@ -68,19 +68,19 @@ def get_tweets(term, mode, num, since, until, context):
 def display_tweets(tweets_df):
     tweet_template = """
     <div style="border: 1px solid #e1e8ed; border-radius: 10px; padding: 15px; margin-bottom: 10px; background-color: #ffffff;">
-        <div style="display: flex; align-items: flex-start;">
+        <div style="display: flex; align-items: center;">
             <img src="{avatar}" alt="{username}" style="border-radius: 50%; width: 50px; height: 50px; margin-right: 10px;">
             <div>
-                <strong>{name}</strong> <span style="color: #657786;">{username}</span> • <span style="color: #657786;">{date}</span>
+                <strong>{name}</strong> <span style="color: #657786;">{username}</span>
                 <br>
-                <p style="margin-top: 10px;">{text}</p>
-                
-                <div style="margin-top: 10px;">
-                    <a href="{link}" target="_blank" style="color: #1da1f2;">View Tweet</a> • 
-                    <span style="color: #657786;">{likes} Likes</span> • {image_link} • 
-                    <a href="#" onclick="deleteTweet('{id}'); return false;" style="color: #e0245e;">Delete Tweet</a>
-                </div>
+                <span style="color: #657786;">{date}</span>
             </div>
+        </div>
+        <p style="margin-top: 10px;">{text}</p>
+        <div style="margin-top: 10px;">
+            <a href="{link}" target="_blank" style="color: #1da1f2;">View Tweet</a> • 
+            <span style="color: #657786;">{likes} Likes</span> • 
+            <a href="#" onclick="deleteTweet('{id}'); return false;" style="color: #e0245e;">Delete Tweet</a>
         </div>
     </div>
     """
@@ -88,12 +88,6 @@ def display_tweets(tweets_df):
     tweets_html = ""
     for idx, row in tweets_df.iterrows():
         if not row['Deleted']:
-            # Handle the image part
-            if row['pictures'] and len(row['pictures']) > 0:
-                image_link = f'<a href="{row["pictures"][0]}" target="_blank" style="color: #1da1f2;">View Image</a>'
-            else:
-                image_link = f'<a href="#" target="_blank" style="color: #1da1f2;">No Image</a>'
-
             tweet_html = tweet_template.format(
                 avatar=row['avatar'],
                 username=row['username'],
@@ -102,8 +96,7 @@ def display_tweets(tweets_df):
                 text=row['text'],
                 link=row['link'],
                 likes=row['likes'],
-                id=idx,
-                image_link=image_link
+                id=idx
             )
             tweets_html += tweet_html
 
@@ -157,7 +150,7 @@ context = create_dropdown_with_custom_option('Select an option', options)
 tweet_count = st.slider("# Number of Tweets: ", 1, 20, 10)
 start_date = st.date_input("# Start Date")
 end_date = st.date_input("# End Date")
-dl_twt_col, load_twt_col = st.columns(2)
+dl_twt_col, load_twt_col = st.columns(2, vertical_allignment='center')
 with dl_twt_col:
     input_submit_button = st.button('Download new tweets')
 
