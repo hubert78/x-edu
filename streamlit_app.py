@@ -145,30 +145,6 @@ def append_to_csv(tweets, file_path='tweets.csv'):
 
 
 
-# Function to load tweets from 
-def load_csv(file_path='tweets.csv'):
-    """
-    Load a CSV file into a DataFrame.
-
-    Parameters:
-    file_path (str): Path to the CSV file.
-
-    Returns:
-    pd.DataFrame: DataFrame containing the CSV data.
-    Do some error handling
-    """
-    try:
-        # Read the CSV file into a DataFrame
-        df = pd.read_csv(file_path)
-        return df
-    except FileNotFoundError:
-        st.write(f"Error: The file at {file_path} was not found.")
-    except pd.errors.EmptyDataError:
-        st.write("Error: The file is empty.")
-    except pd.errors.ParserError:
-        st.write("Error: There was a problem parsing the file.")
-    except Exception as e:
-        st.write(f"An unexpected error occurred: {e}")
 
 
 
@@ -212,20 +188,11 @@ if input_submit_button:
     # Check to see if there is a dataframe for the tweets and display them
     if tweets is not None:
         display_tweets(tweets)
-
-        # Streamlit message handler
-        st.write('<script>'
-                 'window.addEventListener("message", function(event) {'
-                 '   if (event.data) {'
-                 '       window.parent.postMessage(event.data, "*");'
-                 '   }'
-                 '});'
-                 '</script>', unsafe_allow_html=True)
         
         # Present the user with a button to save the tweets to file.
         save_dl_twts = st.button('Save tweets')
         if save_dl_twts:
-            append_to_csv(tweets)
+            append_to_csv(tweets, 'tweets.csv')
 
             # /////////////////////////////////////////////////////////////////////
             try:
