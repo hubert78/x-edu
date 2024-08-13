@@ -74,10 +74,10 @@ def display_tweets(tweets_df):
                 <strong>{name}</strong> <span style="color: #657786;">{username}</span> • <span style="color: #657786;">{date}</span>
                 <br>
                 <p style="margin-top: 10px;">{text}</p>
-                {image}
+                
                 <div style="margin-top: 10px;">
                     <a href="{link}" target="_blank" style="color: #1da1f2;">View Tweet</a> • 
-                    <span style="color: #657786;">{likes} Likes</span> • 
+                    <span style="color: #657786;">{likes} Likes</span> • {image_link} • 
                     <a href="#" onclick="deleteTweet('{id}'); return false;" style="color: #e0245e;">Delete Tweet</a>
                 </div>
             </div>
@@ -90,9 +90,9 @@ def display_tweets(tweets_df):
         if not row['Deleted']:
             # Handle the image part
             if row['pictures'] and len(row['pictures']) > 0:
-                image_html = f'<img src="{row["pictures"][0]}" alt="Tweet image" style="max-width: 100%; height: auto; margin-top: 10px;">'
+                image_link = f'<a href="{row["pictures"][0]}" target="_blank" style="color: #1da1f2;">View Image</a>'
             else:
-                image_html = ''
+                image_link = f'<a href="#" target="_blank" style="color: #1da1f2;">View Image</a>'
 
             tweet_html = tweet_template.format(
                 avatar=row['avatar'],
@@ -103,7 +103,7 @@ def display_tweets(tweets_df):
                 link=row['link'],
                 likes=row['likes'],
                 id=idx,
-                image=image_html
+                image_link=image_link
             )
             tweets_html += tweet_html
 
