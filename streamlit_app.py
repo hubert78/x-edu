@@ -153,6 +153,9 @@ with dl_twt_col:
 with load_twt_col:
     load_twt_button = st.button('Load existing tweets')
 
+# State management
+if 'loaded_tweets' not in st.session_state:
+    st.session_state.loaded_tweets = pd.DataFrame()
 
 # When  Input Submission Button is clicked
 if input_submit_button:
