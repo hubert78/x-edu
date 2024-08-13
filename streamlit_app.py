@@ -57,7 +57,8 @@ def get_tweets(term, mode, num, since, until, context):
     ]
     
     tweets = pd.DataFrame(final_tweets, columns=columns)
-    tweets['date'] = pd.to_datetime(tweets['date'], format='%b %d, %Y UTC', utc=True)
+    tweets['date'] = pd.to_datetime(tweets['date'], format='%b %d, %Y · %I:%M %p UTC', utc=True)
+    tweets['date'] = tweets['date'].dt.date
 
     tweets.sort_values(by='date', ascending=False, inplace=True)
     return tweets
