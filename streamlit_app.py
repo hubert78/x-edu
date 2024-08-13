@@ -185,7 +185,7 @@ if input_submit_button:
         st.write('Ooops. Something went wrong. Search tweets again.')
 
 # --- Save tweets to file ---
-if 'save_button' in st.session_state and is not None and not st.session_state.save_button.empty:
+if 'save_button' in st.session_state and not None and not st.session_state.save_button.empty:
     if st.button('Save tweets'):
         st.write('Saving tweets to file...')  # Debugging statement
         append_to_csv(st.session_state.save_button, 'tweets.csv')   
