@@ -122,6 +122,7 @@ if input_submit_button:
 
 # Check for delete button clicks
 if st.session_state.tweets_df is not None:
+    st.write('We are going to delete a tweet')
     for idx in st.session_state.tweets_df.index:
         if st.button(f'Delete Tweet {idx}'):
             delete_tweet(idx)
