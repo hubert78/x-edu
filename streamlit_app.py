@@ -74,6 +74,7 @@ def display_tweets(tweets_df):
                 <strong>{name}</strong> <span style="color: #657786;">{username}</span> • <span style="color: #657786;">{date}</span>
                 <br>
                 <p style="margin-top: 10px;">{text}</p>
+                {image}
                 <div style="margin-top: 10px;">
                     <a href="{link}" target="_blank" style="color: #1da1f2;">View Tweet</a> • 
                     <span style="color: #657786;">{likes} Likes</span> • 
@@ -87,6 +88,12 @@ def display_tweets(tweets_df):
     tweets_html = ""
     for idx, row in tweets_df.iterrows():
         if not row['Deleted']:
+            # Handle the image part
+            if row['pictures'] and len(row['pictures']) > 0:
+                image_html = f'<img src="{row["pictures"][0]}" alt="Tweet image" style="max-width: 100%; height: auto; margin-top: 10px;">'
+            else:
+                image_html = ''
+
             tweet_html = tweet_template.format(
                 avatar=row['avatar'],
                 username=row['username'],
@@ -95,7 +102,8 @@ def display_tweets(tweets_df):
                 text=row['text'],
                 link=row['link'],
                 likes=row['likes'],
-                id=idx
+                id=idx,
+                image=image_html
             )
             tweets_html += tweet_html
 
