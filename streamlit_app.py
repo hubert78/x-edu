@@ -195,7 +195,7 @@ if load_twt_button:
         tweets = pd.read_csv('tweets.csv')
         #tweets.sort_values(by='date', ascending=False, inplace=True)
         st.session_state.loaded_tweets = tweets
-    except FileNotFoundError:
+    except:
         st.write('Oooops. Something went wrong')
 
 # Filter and display loaded tweets based on context
