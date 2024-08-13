@@ -227,8 +227,9 @@ with dl_twt_col:
 
 with load_twt_col:
     if st.button('Load existing tweets'):
-        tweets = load_csv()
-        display_tweets(tweets)
+        tweets = pd.DataFrame('tweets.csv')
+        st.write(tweets)
+        #display_tweets(tweets)
 
 
 
