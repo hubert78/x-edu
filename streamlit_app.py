@@ -192,48 +192,55 @@ tweet_count = st.slider("# Number of Tweets: ", 1, 20, 10)
 start_date = st.date_input("# Start Date")
 end_date = st.date_input("# End Date")
 dl_twt_col, load_twt_col = st.columns(2)
-
 with dl_twt_col:
-    #input_submit_button = st.button('Download tweets')
-
-    # When When Input Submission Button is clicked
-    if st.button('Download new tweets'):
-        # Load Nitter
-        with suppress_tqdm():
-            st.write('Tweets are loading...')
-            scraper = Nitter(log_level=1, skip_instance_check=False)
-    
-        tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
-        
-        if tweets is not None:
-            display_tweets(tweets)
-    
-            # Streamlit message handler
-            st.write('<script>'
-                     'window.addEventListener("message", function(event) {'
-                     '   if (event.data) {'
-                     '       window.parent.postMessage(event.data, "*");'
-                     '   }'
-                     '});'
-                     '</script>', unsafe_allow_html=True)
-        else:
-            st.write('Ooops. Something went wrong. Reload tweets.')
-
-        save_dl_twts = st.button('Save tweets')
-        if save_dl_twts:
-            append_to_csv(tweets)
-            st.write('Tweets saved')
-
+    input_submit_button = st.button('Download new tweets')
 
 with load_twt_col:
-    if st.button('Load existing tweets'):
-        
-        try:
-            tweets = pd.read_csv('tweets.csv')
-            display_tweets(tweets)
-        except FileNotFoundError:
-            # If file does not exist, create an empty DataFrame
-            st.write('Oooops. Something went wrong')
+    load_twt_button = st.button('Load existing tweets')
+
+
+# When  Input Submission Button is clicked
+if input_submit_button:
+    # Load Nitter
+    with suppress_tqdm():
+        st.write('Loading tweets...')
+        scraper = Nitter(log_level=1, skip_instance_check=False)
+
+    # Get tweets from Nitter
+    tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
+
+    # Check to see if there is a dataframe for the tweets and display them
+    if tweets is not None:
+        display_tweets(tweets)
+
+        # Streamlit message handler
+        st.write('<script>'
+                 'window.addEventListener("message", function(event) {'
+                 '   if (event.data) {'
+                 '       window.parent.postMessage(event.data, "*");'
+                 '   }'
+                 '});'
+                 '</script>', unsafe_allow_html=True)
+    else:
+        st.write('Ooops. Something went wrong. Reload tweets.')
+
+    # Present the user with a button to save the tweets to file.
+    save_dl_twts = st.button('Save tweets')
+    if save_dl_twts:
+        append_to_csv(tweets)
+        st.write('Tweets saved')
+
+
+# When the Load existing tweets button is clicked. 
+if load_twt_button:
+
+    # Try loading and display the tweets.
+    try:
+        tweets = pd.read_csv('tweets.csv')
+        display_tweets(tweets)
+    except FileNotFoundError:
+        # If file does not exist, create an empty DataFrame
+        st.write('Oooops. Something went wrong')
         
         
 
