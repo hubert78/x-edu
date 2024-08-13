@@ -84,18 +84,18 @@ def display_tweets(tweets_df):
     """
 
     # Loop through each tweet in the DataFrame and format it using the template
-    tweets_html = ""
-    for _, row in tweets_df.iterrows():
+  tweets_html = ""
+    for idx, row in tweets_df.iterrows():
         if not row['Deleted']:
             tweet_html = tweet_template.format(
                 avatar=row['avatar'],
                 username=row['username'],
-                userid=row['name'],
+                userid=row['userid'],
                 date=row['date'],
                 text=row['text'],
                 link=row['link'],
                 likes=row['likes'],
-                id=row.name  # Use row index as unique ID
+                id=idx
             )
             tweets_html += tweet_html
 
@@ -138,7 +138,10 @@ if input_submit_button:
         scraper = Nitter(log_level=1, skip_instance_check=False)
 
     tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
-    display_tweets(tweets)
+    if tweets:
+        display_tweets(tweets)
+    else:
+        st.write('Ooops. Something went wrong. Reload tweets.')
 
     # Streamlit message handler
     st.write('<script>'
