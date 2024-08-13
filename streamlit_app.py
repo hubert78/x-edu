@@ -169,18 +169,19 @@ if input_submit_button:
         display_tweets(tweets)
         
         # Present the user with a button to save the tweets to file.
-        save_dl_twts = st.button('Save tweets')
-        if save_dl_twts:
-            st.write('Save button clicked.')
-            append_to_csv(tweets, 'tweets.csv')
+        #save_dl_twts = st.button('Save tweets')
+        #if save_dl_twts:
+        st.write('Save button clicked.')
+        append_to_csv(tweets, 'tweets.csv')
+        st.write('Tweets saved')
 
-            # /////////////////////////////////////////////////////////////////////
-            # Check if file exists and display confirmation
-            if os.path.exists('tweets.csv'):
-                existing_data = pd.read_csv('tweets.csv')
-                st.write(f'Tweets saved. Number of rows in file: {len(existing_data)}')
-            else:
-                st.write('Failed to save tweets.')     
+        # /////////////////////////////////////////////////////////////////////
+        # Check if file exists and display confirmation
+        if os.path.exists('tweets.csv'):
+            existing_data = pd.read_csv('tweets.csv')
+            st.write(f'Tweets saved. Number of rows in file: {len(existing_data)}')
+        else:
+            st.write('Failed to save tweets.')     
     else:
         st.write('Ooops. Something went wrong. Reload tweets.')
 
