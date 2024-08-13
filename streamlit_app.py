@@ -26,7 +26,7 @@ def suppress_tqdm():
 def create_dropdown_with_custom_option(label, options):
     selected_option = st.selectbox(label, options)
 
-    if selected_option == 'Other':
+    if selected_option in ['Other', 'Type new key':
         custom_option = st.text_input('Please specify:')
 
         if custom_option:
@@ -48,7 +48,7 @@ def get_tweets(term, mode, num, since, until, context):
         tweet_data = [
             tweet['user']['username'], tweet['user']['name'], tweet['user']['avatar'],
             tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'],
-            tweet['pictures'], 'None', context, False]
+            tweet['pictures'], 'Type new key', context, False]
         final_tweets.append(tweet_data)
     
     columns = [
@@ -139,7 +139,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-options = ['College admissions', 'Application fee waiver', 'Cold email', 'Other']
+options = ['College admissions', 'Application fee waiver', 'Cold email']
 #configure()
 
 
@@ -188,15 +188,13 @@ if 'save_tweet' in st.session_state and not None and not st.session_state.save_t
     keyword_selector, save_twt_button = st.columns(2)
     
     save_keywords = st.session_state.save_tweet['keyword'].unique()
-    with keyword_selector: 
-        selected_keyword = create_dropdown_with_custom_option('Select a keyword. Example: Biology', save_keywords)
-        st.session_state.save_tweet['keyword'] = st.session_state.save_tweet['keyword'].replace({'None':selected_keyword})
+    #with keyword_selector: 
+    selected_keyword = create_dropdown_with_custom_option('Select a keyword. Example: Biology', save_keywords)
+    st.session_state.save_tweet['keyword'] = st.session_state.save_tweet['keyword'].replace({'None':selected_keyword})
 
-
-    with save_twt_button:
-        if st.button('Save tweets'):
-            append_to_csv(st.session_state.save_tweet, 'tweets.csv')  
-            st.write('Tweets saved')  
+    if st.button('Save tweets'):
+        append_to_csv(st.session_state.save_tweet, 'tweets.csv')  
+        st.write('Tweets saved')  
 
 
 
