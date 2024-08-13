@@ -48,17 +48,19 @@ def get_tweets(term, mode, num, since, until, context):
         tweet_data = [
             tweet['user']['username'], tweet['user']['name'], tweet['user']['avatar'],
             tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'],
-            tweet['pictures'], False]
+            tweet['pictures'], 'False']
+        #print(tweet_data)
         final_tweets.append(tweet_data)
     
     columns = [
         'username', 'name', 'avatar', 'link', 'text', 'date', 'likes', 'pictures', 'Deleted'
     ]
     
-    return pd.DataFrame(final_tweets, columns=columns)
-    #tweets['date'] = pd.to_datetime(tweets['date'], format='%b %d, %Y · %I:%M %p UTC', utc=True)
+    tweets = pd.DataFrame(final_tweets, columns=columns)
+    tweets['date'] = pd.to_datetime(tweets['date'], format='%b %d, %Y · %I:%M %p UTC', utc=True)
 
-    #return tweets.sort_values(by='date', ascending=False, inplace=True)
+    tweets.sort_values(by='date', ascending=False, inplace=True)
+    return tweets
 
 
 # Function to build twitter-like rows.
