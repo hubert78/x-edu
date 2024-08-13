@@ -192,19 +192,23 @@ if input_submit_button:
 if load_twt_button:
     try:
         tweets = pd.read_csv('tweets.csv')
-        unique_contexts = tweets['context'].unique()
-        
-        # Dropdown for filtering by context
-        selected_context = st.selectbox('Filter by context:', ['All'] + list(unique_contexts))
-        st.write(selected_context)
-
-        if selected_context != 'All':
-            tweets = tweets[tweets['context'] == selected_context]
-        
-        display_tweets(tweets)
+        st.session_state.loaded_tweets = tweets
     except FileNotFoundError:
         st.write('Oooops. Something went wrong')
-        
+
+# Filter and display loaded tweets based on context
+if not st.session_state.loaded_tweets.empty:
+    unique_contexts = st.session_state.loaded_tweets['context'].unique()
+    
+    # Dropdown for filtering by context
+    selected_context = st.selectbox('Filter by context:', ['All'] + list(unique_contexts))
+
+    if selected_context != 'All':
+        filtered_tweets = st.session_state.loaded_tweets[st.session_state.loaded_tweets['context'] == selected_context]
+    else:
+        filtered_tweets = st.session_state.loaded_tweets
+
+    display_tweets(filtered_tweets)
         
 
 
