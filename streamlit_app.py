@@ -113,7 +113,7 @@ def handle_message(message):
 
 
 # Function to append tweets to an existing tweet.csv file
-def overwrite_csv(df, file_path):
+def append_to_csv(df, file_path):
     try:
         df.to_csv(file_path, mode='w', header=True, index=False)
         st.write('Tweets successfully saved.')
@@ -153,6 +153,7 @@ with load_twt_col:
 
 # State management
 if 'loaded_tweets' not in st.session_state:
+    st.session_state.save_button = False
     st.session_state.loaded_tweets = pd.DataFrame()
 
 # When  Input Submission Button is clicked
@@ -170,23 +171,27 @@ if input_submit_button:
         display_tweets(tweets)
         
         # Present the user with a button to save the tweets to file.
-        #save_dl_twts = st.button('Save tweets')
-        #if save_dl_twts:
-        st.write('Save button clicked.')
-        append_to_csv(tweets, 'tweets.csv')
-        st.write('Tweets saved')
+        save_dl_twts = st.button('Save tweets')
+        if save_dl_twts:
+            st.session_state.save_button = True
 
-        # /////////////////////////////////////////////////////////////////////
-        # Check if file exists and display confirmation
-        if os.path.exists('tweets.csv'):
-            existing_data = pd.read_csv('tweets.csv')
-            st.write(f'Tweets saved. Number of rows in file: {len(existing_data)}')
-        else:
-            st.write('Failed to save tweets.')     
+
+    
     else:
         st.write('Ooops. Something went wrong. Reload tweets.')
 
-
+# --- Save tweets to file ---
+if st.session_state.save_button:
+    append_to_csv(tweets, 'tweets.csv')
+    st.write('Tweets saved')    
+    
+    # /////////////////////////////////////////////////////////////////////
+    # Check if file exists and display confirmation
+    if os.path.exists('tweets.csv'):
+        existing_data = pd.read_csv('tweets.csv')
+        st.write(f'Tweets saved. Number of rows in file: {len(existing_data)}')
+    else:
+        st.write('Failed to save tweets.') 
 
 
 # When the Load existing tweets button is clicked. 
@@ -200,22 +205,19 @@ if load_twt_button:
 
 # Filter and display loaded tweets based on context
 if not st.session_state.loaded_tweets.empty:
-    try:
-        unique_contexts = st.session_state.loaded_tweets['context'].unique()
-        
-        # Dropdown for filtering by context
-        selected_context = st.selectbox('Filter by context:', ['All'] + list(unique_contexts))
+    unique_contexts = st.session_state.loaded_tweets['context'].unique()
     
-        if selected_context != 'All':
-            filtered_tweets = st.session_state.loaded_tweets[st.session_state.loaded_tweets['context'] == selected_context]
-        else:
-            filtered_tweets = st.session_state.loaded_tweets
+    # Dropdown for filtering by context
+    selected_context = st.selectbox('Filter by context:', ['All'] + list(unique_contexts))
+
+    if selected_context != 'All':
+        filtered_tweets = st.session_state.loaded_tweets[st.session_state.loaded_tweets['context'] == selected_context]
+    else:
+        filtered_tweets = st.session_state.loaded_tweets
+
+    filtered_tweets.sort_values(by='date', ascending=False, inplace=True)
+    display_tweets(filtered_tweets)
     
-        filtered_tweets.sort_values(by='date', ascending=False, inplace=True)
-        display_tweets(filtered_tweets)
-        
-    except:
-        st.write('Oooops. Something went wrong')        
 
 
 
