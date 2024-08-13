@@ -181,7 +181,7 @@ if input_submit_button:
         st.write('Ooops. Something went wrong. Reload tweets.')
 
 # --- Save tweets to file ---
-if st.session_state.save_button == True:
+if not st.session_state.save_button:
     append_to_csv(tweets, 'tweets.csv')
     st.write('Tweets saved')    
     
