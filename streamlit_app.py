@@ -56,8 +56,8 @@ def get_tweets(term, mode, num, since, until, context):
     ]
     # Creating a DataFrame and Converting the str date to datetime. Then sort it in descending order
     tweets = pd.DataFrame(final_tweets, columns=columns)
-    tweets['date'] = pd.to_datetime(tweets['date'], format='%b %d, %Y · %I:%M %p UTC', utc=True).dt.strftime('%b %d, %Y')
-    #tweets['date'] = tweets['date'].dt.strftime('%b %d, %Y')
+    tweets['date'] = pd.to_datetime(tweets['date'], format='%b %d, %Y · %I:%M %p UTC', utc=True)
+    tweets['date'] = tweets['date'].dt.strftime('%b %d, %Y')
 
     tweets.sort_values(by='date', ascending=False, inplace=True)
     return tweets
@@ -226,7 +226,14 @@ if input_submit_button:
         save_dl_twts = st.button('Save tweets')
         if save_dl_twts:
             append_to_csv(tweets)
-            st.write('Tweets saved')        
+
+        # /////////////////////////////////////////////////////////////////////
+        try:
+            existing_data = pd.read_csv('tweets.csv')
+            st.write('Tweets saved')
+        except FileNotFoundError:
+            # If file does not exist, create an empty DataFrame          
+            st.write('Something went wrong')        
     else:
         st.write('Ooops. Something went wrong. Reload tweets.')
 
