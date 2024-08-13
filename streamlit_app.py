@@ -68,19 +68,18 @@ def get_tweets(term, mode, num, since, until, context):
 def display_tweets(tweets_df):
     tweet_template = """
     <div style="border: 1px solid #e1e8ed; border-radius: 10px; padding: 15px; margin-bottom: 10px; background-color: #ffffff;">
-        <div style="display: flex; align-items: center;">
+        <div style="display: flex; align-items: flex-start;">
             <img src="{avatar}" alt="{username}" style="border-radius: 50%; width: 50px; height: 50px; margin-right: 10px;">
             <div>
-                <strong>{name}</strong> <span style="color: #657786;">{username}</span>
+                <strong>{name}</strong> <span style="color: #657786;">{username}</span> • <span style="color: #657786;">{date}</span>
                 <br>
-                <span style="color: #657786;">{date}</span>
+                <p style="margin-top: 10px;">{text}</p>
+                <div style="margin-top: 10px;">
+                    <a href="{link}" target="_blank" style="color: #1da1f2;">View Tweet</a> • 
+                    <span style="color: #657786;">{likes} Likes</span> • 
+                    <a href="#" onclick="deleteTweet('{id}'); return false;" style="color: #e0245e;">Delete Tweet</a>
+                </div>
             </div>
-        </div>
-        <p style="margin-top: 10px;">{text}</p>
-        <div style="margin-top: 10px;">
-            <a href="{link}" target="_blank" style="color: #1da1f2;">View Tweet</a> • 
-            <span style="color: #657786;">{likes} Likes</span> • 
-            <a href="#" onclick="deleteTweet('{id}'); return false;" style="color: #e0245e;">Delete Tweet</a>
         </div>
     </div>
     """
@@ -186,6 +185,11 @@ if input_submit_button:
 
 # --- Save tweets to file ---
 if 'save_button' in st.session_state and not None and not st.session_state.save_button.empty:
+    save_twt_selector, save_twt_button = st.columns(2)
+    with save_twt_selector = st.selectbox('Filter by context:', ['All'] + list(unique_contexts))
+
+
+    
     if st.button('Save tweets'):
         append_to_csv(st.session_state.save_button, 'tweets.csv')  
         st.write('Tweets saved')  
