@@ -195,6 +195,7 @@ if input_submit_button:
 if load_twt_button:
     try:
         tweets = pd.read_csv('tweets.csv')
+        tweets.sort_values(by='date', ascending=False, inplace=True)
         st.session_state.loaded_tweets = tweets
     except FileNotFoundError:
         st.write('Oooops. Something went wrong')
