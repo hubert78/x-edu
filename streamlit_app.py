@@ -168,6 +168,7 @@ if input_submit_button:
 
     # Get tweets from Nitter
     dl_tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
+    st.write(dl_tweets)
 
     # Check to see if there is a dataframe for the tweets and display them
     if dl_tweets is not None and not dl_tweets.empty:
