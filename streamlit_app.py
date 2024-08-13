@@ -63,7 +63,6 @@ def get_tweets(term, mode, num, since, until, context):
 
 # Function to build twitter-like rows.
 def display_tweets(tweets_df):
-    # Define a template for each tweet's HTML
     tweet_template = """
     <div style="border: 1px solid #e1e8ed; border-radius: 10px; padding: 15px; margin-bottom: 10px; background-color: #ffffff;">
         <div style="display: flex; align-items: center;">
@@ -78,13 +77,12 @@ def display_tweets(tweets_df):
         <div style="margin-top: 10px;">
             <a href="{link}" target="_blank" style="color: #1da1f2;">View Tweet</a> • 
             <span style="color: #657786;">{likes} Likes</span> • 
-            <a href="#" onclick="window.parent.postMessage({id: '{id}'}, '*');" style="color: #e0245e;">Delete Tweet</a>
+            <a href="#" onclick="deleteTweet('{id}'); return false;" style="color: #e0245e;">Delete Tweet</a>
         </div>
     </div>
     """
 
-    # Loop through each tweet in the DataFrame and format it using the template
-  tweets_html = ""
+    tweets_html = ""
     for idx, row in tweets_df.iterrows():
         if not row['Deleted']:
             tweet_html = tweet_template.format(
@@ -99,7 +97,6 @@ def display_tweets(tweets_df):
             )
             tweets_html += tweet_html
 
-    # Display the tweets HTML in Streamlit
     st.markdown(tweets_html, unsafe_allow_html=True)
 
 
