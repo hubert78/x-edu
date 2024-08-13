@@ -187,15 +187,9 @@ if input_submit_button:
 # --- Save tweets to file ---
 if 'save_button' in st.session_state and not None and not st.session_state.save_button.empty:
     if st.button('Save tweets'):
-        st.write('Saving tweets to file...')  # Debugging statement
-        append_to_csv(st.session_state.save_button, 'tweets.csv')   
-        
-        # Check if file exists and display confirmation
-        if os.path.exists('tweets.csv'):
-            existing_data = pd.read_csv('tweets.csv')
-            st.write(f'Tweets saved. Number of rows in file: {len(existing_data)}')
-        else:
-            st.write('Failed to save tweets.') 
+        append_to_csv(st.session_state.save_button, 'tweets.csv')  
+        st.write('Tweets saved')  
+
 
 
 # When the Load existing tweets button is clicked. 
