@@ -92,7 +92,7 @@ def display_tweets(tweets_df):
             if row['pictures'] and len(row['pictures']) > 0:
                 image_link = f'<a href="{row["pictures"][0]}" target="_blank" style="color: #1da1f2;">View Image</a>'
             else:
-                image_link = f'<a href="#" target="_blank" style="color: #1da1f2;">View Image</a>'
+                image_link = f'<a href="#" target="_blank" style="color: #1da1f2;">No Image</a>'
 
             tweet_html = tweet_template.format(
                 avatar=row['avatar'],
@@ -140,7 +140,7 @@ def append_to_csv(df, file_path):
 
 
 # APPLICATION STARTS HERE
-st.title('College Application Support')
+st.title('College Application Support', horizontal_allignment='center')
 
 options = ['College admissions', 'Application fee waiver', 'Cold email', 'Other']
 #configure()
@@ -185,11 +185,13 @@ if input_submit_button:
         # Present the user with a button to save the tweets to file.
         if st.button('Save tweets'):
             st.session_state.save_button = dl_tweets
+            st.write('Tweets saved to session state.')  # Debugging statement
     else:
         st.write('Ooops. Something went wrong. Reload tweets.')
 
 # --- Save tweets to file ---
-if not st.session_state.save_button.empty:
+if 'save_button' in st.session_state and not st.session_state.save_button.empty:
+    st.write('Saving tweets to file...')  # Debugging statement
     append_to_csv(st.session_state.save_button, 'tweets.csv')   
     
     # Check if file exists and display confirmation
@@ -206,8 +208,8 @@ if load_twt_button:
         load_tweets = pd.read_csv('tweets.csv')
         #tweets.sort_values(by='date', ascending=False, inplace=True)
         st.session_state.loaded_tweets = load_tweets
-    except:
-        st.write('Oooops. Something went wrong')
+    except Exception as e:
+        st.write(f'Oooops. Something went wrong: {e}')
 
 # Filter and display loaded tweets based on context
 if not st.session_state.loaded_tweets.empty:
