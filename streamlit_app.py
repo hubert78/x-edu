@@ -113,12 +113,9 @@ def handle_message(message):
 
 
 # Function to append tweets to an existing tweet.csv file
-def append_to_csv(df, file_path):
+def overwrite_csv(df, file_path):
     try:
-        if os.path.exists(file_path):
-            df.to_csv(file_path, mode='a', header=False, index=False)
-        else:
-            df.to_csv(file_path, mode='w', header=True, index=False)
+        df.to_csv(file_path, mode='w', header=True, index=False)
         st.write('Tweets successfully saved.')
     except Exception as e:
         st.write(f"An error occurred while saving the file: {e}")
