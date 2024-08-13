@@ -205,7 +205,7 @@ if load_twt_button:
         #tweets.sort_values(by='date', ascending=False, inplace=True)
         st.session_state.loaded_tweets = load_tweets
     except Exception as e:
-        st.write(f'Oooops. Something went wrong: {e}')
+        st.write(f'You have no saved tweets')
 
 # Filter and display loaded tweets based on context
 if not st.session_state.loaded_tweets.empty:
