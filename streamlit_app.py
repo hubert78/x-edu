@@ -196,6 +196,7 @@ if load_twt_button:
         
         # Dropdown for filtering by context
         selected_context = st.selectbox('Filter by context:', ['All'] + list(unique_contexts))
+        st.write(selected_context)
 
         if selected_context != 'All':
             tweets = tweets[tweets['context'] == selected_context]
