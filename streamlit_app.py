@@ -186,7 +186,7 @@ if input_submit_button:
 if 'save_tweet' in st.session_state and not None and not st.session_state.save_tweet.empty:
     keyword_selector, save_twt_button = st.columns(2)
     
-    save_keywords = st.session_state.save_tweet['keyword'].unique()
+    save_keywords = ['Biology', 'Computer Science', 'Essays', 'Other']
     #with keyword_selector: 
     selected_keyword = create_dropdown_with_custom_option('Select a keyword. Example: Biology', save_keywords)
     st.session_state.save_tweet['keyword'] = st.session_state.save_tweet['keyword'].replace({'Type new key':selected_keyword})
