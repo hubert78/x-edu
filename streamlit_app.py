@@ -48,11 +48,11 @@ def get_tweets(term, mode, num, since, until, context):
         tweet_data = [
             tweet['user']['username'], tweet['user']['name'], tweet['user']['avatar'],
             tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'],
-            tweet['pictures'], False]
+            tweet['pictures'], context, False]
         final_tweets.append(tweet_data)
     
     columns = [
-        'username', 'name', 'avatar', 'link', 'text', 'date', 'likes', 'pictures', 'Deleted'
+        'username', 'name', 'avatar', 'link', 'text', 'date', 'likes', 'pictures', 'context', 'Deleted'
     ]
     # Creating a DataFrame and Converting the str date to datetime. Then sort it in descending order
     tweets = pd.DataFrame(final_tweets, columns=columns)
@@ -111,6 +111,72 @@ def handle_message(message):
     delete_tweet(tweet_id, tweets_df)
 
 
+# Function to append tweets to an existing tweet.csv file
+def append_to_csv(tweets, file_path='tweets.csv'):
+    """
+    Appends info_data to a CSV file, ensuring no tweet URL is duplicated.
+    
+    Parameters:
+    - tweets: DataFrame containing tweet data to append.
+    - file_path: Path to the CSV file where data will be appended.
+    """
+    
+    # Read existing data from the CSV file
+    try:
+        existing_data = pd.read_csv(file_path)
+    except FileNotFoundError:
+        # If file does not exist, create an empty DataFrame
+        existing_data = pd.DataFrame(columns=tweets.columns)
+    
+    # Check for duplicate URLs in the existing data
+    if 'link' in existing_data.columns:
+        existing_links = existing_data['link'].tolist()
+    else:
+        existing_links = []
+
+    # Filter out duplicate rows based on 'link' column
+    new_data = tweets[~info_data['link'].isin(existing_links)]
+    
+    # Append the new data to the existing data
+    updated_data = pd.concat([existing_data, new_data], ignore_index=True)
+    
+    # Save the updated data back to the CSV file
+    updated_data.to_csv(file_path, index=False)
+
+
+
+# Function to load tweets from 
+def load_csv(file_path='tweets.csv'):
+    """
+    Load a CSV file into a DataFrame.
+
+    Parameters:
+    file_path (str): Path to the CSV file.
+
+    Returns:
+    pd.DataFrame: DataFrame containing the CSV data.
+    Do some error handling
+    """
+    try:
+        # Read the CSV file into a DataFrame
+        df = pd.read_csv(file_path)
+        return df
+    except FileNotFoundError:
+        st.write(f"Error: The file at {file_path} was not found.")
+    except pd.errors.EmptyDataError:
+        st.write("Error: The file is empty.")
+    except pd.errors.ParserError:
+        st.write("Error: There was a problem parsing the file.")
+    except Exception as e:
+        st.write(f"An unexpected error occurred: {e}")
+
+
+
+
+
+
+
+
 
 # APPLICATION STARTS HERE
 st.title('College Application Support')
@@ -125,34 +191,44 @@ context = create_dropdown_with_custom_option('Select an option', options)
 tweet_count = st.slider("# Number of Tweets: ", 1, 20, 10)
 start_date = st.date_input("# Start Date")
 end_date = st.date_input("# End Date")
-input_submit_button = st.button('Load tweets')
+dl_twt_col, load_twt_col = st.columns(2)
 
+with dl_twt_col:
+    #input_submit_button = st.button('Download tweets')
 
-# When When Input Submission Button is clicked
-if input_submit_button:
-    # Load Nitter
-    with suppress_tqdm():
-        st.write('Tweets are loading...')
-        scraper = Nitter(log_level=1, skip_instance_check=False)
-
-    tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
+    # When When Input Submission Button is clicked
+    if st.button('Download new tweets'):
+        # Load Nitter
+        with suppress_tqdm():
+            st.write('Tweets are loading...')
+            scraper = Nitter(log_level=1, skip_instance_check=False)
     
-    if tweets is not None:
+        tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
+        
+        if tweets is not None:
+            display_tweets(tweets)
+    
+            # Streamlit message handler
+            st.write('<script>'
+                     'window.addEventListener("message", function(event) {'
+                     '   if (event.data) {'
+                     '       window.parent.postMessage(event.data, "*");'
+                     '   }'
+                     '});'
+                     '</script>', unsafe_allow_html=True)
+        else:
+            st.write('Ooops. Something went wrong. Reload tweets.')
+
+        save_dl_twts = st.button('Save tweets')
+        if save_dl_twts:
+            append_to_csv(tweets)
+            st.write('Tweets saved')
+
+
+with load_twt_col:
+    if st.button('Load existing tweets'):
+        tweets = load_csv()
         display_tweets(tweets)
-
-        # Streamlit message handler
-        st.write('<script>'
-                 'window.addEventListener("message", function(event) {'
-                 '   if (event.data) {'
-                 '       window.parent.postMessage(event.data, "*");'
-                 '   }'
-                 '});'
-                 '</script>', unsafe_allow_html=True)
-    else:
-        st.write('Ooops. Something went wrong. Reload tweets.')
-
-
-
 
 
 
