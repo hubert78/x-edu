@@ -221,14 +221,16 @@ if input_submit_button:
                  '   }'
                  '});'
                  '</script>', unsafe_allow_html=True)
+        
+        # Present the user with a button to save the tweets to file.
+        save_dl_twts = st.button('Save tweets')
+        if save_dl_twts:
+            append_to_csv(tweets)
+            st.write('Tweets saved')        
     else:
         st.write('Ooops. Something went wrong. Reload tweets.')
 
-    # Present the user with a button to save the tweets to file.
-    save_dl_twts = st.button('Save tweets')
-    if save_dl_twts:
-        append_to_csv(tweets)
-        st.write('Tweets saved')
+
 
 
 # When the Load existing tweets button is clicked. 
