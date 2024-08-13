@@ -227,9 +227,15 @@ with dl_twt_col:
 
 with load_twt_col:
     if st.button('Load existing tweets'):
-        tweets = pd.read_csv('tweets.csv')
-        st.write(tweets)
-        #display_tweets(tweets)
+        
+        try:
+            tweets = pd.read_csv('tweets.csv')
+            display_tweets(tweets)
+        except FileNotFoundError:
+            # If file does not exist, create an empty DataFrame
+            st.write('Oooops. Something went wrong')
+        
+        
 
 
 
