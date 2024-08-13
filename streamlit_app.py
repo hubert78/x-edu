@@ -208,7 +208,7 @@ if load_twt_button:
 
 # Filter and display loaded tweets based on context
 if not st.session_state.loaded_tweets.empty:
-    st.write('\n')
+    st.write('\n\n')
     unique_contexts = st.session_state.loaded_tweets['context'].unique()
     
     # Dropdown for filtering by context
