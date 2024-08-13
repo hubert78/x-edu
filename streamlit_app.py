@@ -184,7 +184,7 @@ if input_submit_button:
         st.write('Ooops. Something went wrong. Search tweets again.')
 
 # --- Save tweets to file ---
-if 'save_tweet' in st.save_tweet and not None and not st.session_state.save_tweet.empty:
+if 'save_tweet' in st.session_state and not None and not st.session_state.save_tweet.empty:
     keyword_selector, save_twt_button = st.columns(2)
     
     save_keywords = st.session_state.save_tweet['keyword'].unique()
