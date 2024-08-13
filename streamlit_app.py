@@ -180,17 +180,13 @@ if input_submit_button:
     if dl_tweets is not None and not dl_tweets.empty:
         display_tweets(dl_tweets)
         
-        # Present the user with a button to save the tweets to file.
-        if st.button('Save tweets'):
-            st.session_state.save_button = dl_tweets
-            st.write('Tweets saved to session state.')  # Debugging statement
     else:
         st.write('Ooops. Something went wrong. Reload tweets.')
 
 # --- Save tweets to file ---
-if 'save_button' in st.session_state and not st.session_state.save_button.empty:
+if st.button('Save tweets'):
     st.write('Saving tweets to file...')  # Debugging statement
-    append_to_csv(st.session_state.save_button, 'tweets.csv')   
+    append_to_csv(dl_tweets, 'tweets.csv')   
     
     # Check if file exists and display confirmation
     if os.path.exists('tweets.csv'):
