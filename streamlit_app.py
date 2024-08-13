@@ -90,7 +90,7 @@ def display_tweets(tweets_df):
             tweet_html = tweet_template.format(
                 avatar=row['avatar'],
                 username=row['username'],
-                userid=row['userid'],
+                userid=row['name'],
                 date=row['date'],
                 text=row['text'],
                 link=row['link'],
