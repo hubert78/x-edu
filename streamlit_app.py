@@ -170,25 +170,19 @@ if input_submit_button:
     dl_tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
 
     # Check to see if there is a dataframe for the tweets and display them
-    if dl_tweets is not None:
+    if dl_tweets is not None and not dl_tweets.empty:
         display_tweets(dl_tweets)
         
         # Present the user with a button to save the tweets to file.
-        save_dl_twts = st.button('Save tweets')
-        if save_dl_twts:
+        if st.button('Save tweets'):
             st.session_state.save_button = dl_tweets
-
-
-    
     else:
         st.write('Ooops. Something went wrong. Reload tweets.')
 
 # --- Save tweets to file ---
 if not st.session_state.save_button.empty:
-    append_to_csv(st.session_state.save_button, 'tweets.csv')
-    st.write('Tweets saved')    
+    append_to_csv(st.session_state.save_button, 'tweets.csv')   
     
-    # /////////////////////////////////////////////////////////////////////
     # Check if file exists and display confirmation
     if os.path.exists('tweets.csv'):
         existing_data = pd.read_csv('tweets.csv')
