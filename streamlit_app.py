@@ -48,7 +48,7 @@ def get_tweets(term, mode, num, since, until, context):
         tweet_data = [
             tweet['user']['username'], tweet['user']['name'], tweet['user']['avatar'],
             tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'],
-            tweet['pictures'], 'Type new key', context, False]
+            tweet['pictures'], 'None', context, False]
         final_tweets.append(tweet_data)
     
     columns = [
@@ -188,8 +188,8 @@ if 'save_tweet' in st.session_state and not None and not st.session_state.save_t
     
     save_keywords = ['Biology', 'Computer Science', 'Essays', 'Other']
     #with keyword_selector: 
-    selected_keyword = create_dropdown_with_custom_option('Select a keyword. Example: Biology', save_keywords)
-    st.session_state.save_tweet['keyword'] = st.session_state.save_tweet['keyword'].replace({'Type new key':selected_keyword})
+    selected_keyword = create_dropdown_with_custom_option('Select or enter a keyword. Example: Biology', save_keywords)
+    st.session_state.save_tweet['keyword'] = st.session_state.save_tweet['keyword'].replace({'None':selected_keyword})
 
     if st.button('Save tweets'):
         append_to_csv(st.session_state.save_tweet, 'tweets.csv')  
@@ -208,6 +208,7 @@ if load_twt_button:
 
 # Filter and display loaded tweets based on context
 if not st.session_state.loaded_tweets.empty:
+    st.write('\n')
     unique_contexts = st.session_state.loaded_tweets['context'].unique()
     
     # Dropdown for filtering by context
@@ -218,7 +219,7 @@ if not st.session_state.loaded_tweets.empty:
     else:
         filtered_tweets = st.session_state.loaded_tweets
 
-    filtered_tweets.sort_values(by='date', ascending=False, inplace=True)
+    filtered_tweets.sort_values(by='datetime', ascending=False, inplace=True)
     display_tweets(filtered_tweets)
     
 
