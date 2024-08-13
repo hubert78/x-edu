@@ -151,9 +151,12 @@ with dl_twt_col:
 with load_twt_col:
     load_twt_button = st.button('Load existing tweets')
 
-# State management
-if 'loaded_tweets' not in st.session_state:
+# State management for save button
+if 'save_button' not in st.session_state:
     st.session_state.save_button = False
+
+# State management for 'loaded_tweets'
+if 'loaded_tweets' not in st.session_state:
     st.session_state.loaded_tweets = pd.DataFrame()
 
 # When  Input Submission Button is clicked
@@ -164,11 +167,11 @@ if input_submit_button:
         scraper = Nitter(log_level=1, skip_instance_check=False)
 
     # Get tweets from Nitter
-    tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
+    dl_tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
 
     # Check to see if there is a dataframe for the tweets and display them
-    if tweets is not None:
-        display_tweets(tweets)
+    if dl_tweets is not None:
+        display_tweets(dl_tweets)
         
         # Present the user with a button to save the tweets to file.
         save_dl_twts = st.button('Save tweets')
@@ -182,7 +185,7 @@ if input_submit_button:
 
 # --- Save tweets to file ---
 if not st.session_state.save_button:
-    append_to_csv(tweets, 'tweets.csv')
+    append_to_csv(dl_tweets, 'tweets.csv')
     st.write('Tweets saved')    
     
     # /////////////////////////////////////////////////////////////////////
@@ -197,9 +200,9 @@ if not st.session_state.save_button:
 # When the Load existing tweets button is clicked. 
 if load_twt_button:
     try:
-        tweets = pd.read_csv('tweets.csv')
+        load_tweets = pd.read_csv('tweets.csv')
         #tweets.sort_values(by='date', ascending=False, inplace=True)
-        st.session_state.loaded_tweets = tweets
+        st.session_state.loaded_tweets = load_tweets
     except:
         st.write('Oooops. Something went wrong')
 
