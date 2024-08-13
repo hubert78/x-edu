@@ -165,6 +165,8 @@ if 'save_button' not in st.session_state:
 if 'loaded_tweets' not in st.session_state:
     st.session_state.loaded_tweets = pd.DataFrame()
 
+dl_tweets = pd.DataFrame()
+
 # When  Input Submission Button is clicked
 if input_submit_button:
     # Load Nitter
@@ -184,16 +186,17 @@ if input_submit_button:
         st.write('Ooops. Something went wrong. Reload tweets.')
 
 # --- Save tweets to file ---
-if st.button('Save tweets'):
-    st.write('Saving tweets to file...')  # Debugging statement
-    append_to_csv(dl_tweets, 'tweets.csv')   
-    
-    # Check if file exists and display confirmation
-    if os.path.exists('tweets.csv'):
-        existing_data = pd.read_csv('tweets.csv')
-        st.write(f'Tweets saved. Number of rows in file: {len(existing_data)}')
-    else:
-        st.write('Failed to save tweets.') 
+if not dl_tweets.empty:
+    if st.button('Save tweets'):
+        st.write('Saving tweets to file...')  # Debugging statement
+        append_to_csv(dl_tweets, 'tweets.csv')   
+        
+        # Check if file exists and display confirmation
+        if os.path.exists('tweets.csv'):
+            existing_data = pd.read_csv('tweets.csv')
+            st.write(f'Tweets saved. Number of rows in file: {len(existing_data)}')
+        else:
+            st.write('Failed to save tweets.') 
 
 
 # When the Load existing tweets button is clicked. 
