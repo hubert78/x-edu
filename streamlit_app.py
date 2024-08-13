@@ -185,7 +185,7 @@ if input_submit_button:
 
 # --- Save tweets to file ---
 if not st.session_state.save_button.empty:
-    append_to_csv(dl_tweets, 'tweets.csv')
+    append_to_csv(st.session_state.save_button, 'tweets.csv')
     st.write('Tweets saved')    
     
     # /////////////////////////////////////////////////////////////////////
