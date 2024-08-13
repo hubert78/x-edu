@@ -140,17 +140,18 @@ if input_submit_button:
     tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
     if tweets:
         display_tweets(tweets)
+
+        # Streamlit message handler
+        st.write('<script>'
+                 'window.addEventListener("message", function(event) {'
+                 '   if (event.data) {'
+                 '       window.parent.postMessage(event.data, "*");'
+                 '   }'
+                 '});'
+                 '</script>', unsafe_allow_html=True)
     else:
         st.write('Ooops. Something went wrong. Reload tweets.')
 
-    # Streamlit message handler
-    st.write('<script>'
-             'window.addEventListener("message", function(event) {'
-             '   if (event.data) {'
-             '       window.parent.postMessage(event.data, "*");'
-             '   }'
-             '});'
-             '</script>', unsafe_allow_html=True)
 
 
 
