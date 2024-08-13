@@ -138,7 +138,7 @@ if input_submit_button:
 
     tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
     
-    if tweets:
+    if tweets is not None:
         display_tweets(tweets)
 
         # Streamlit message handler
