@@ -152,7 +152,7 @@ start_date = st.date_input("# Start Date")
 end_date = st.date_input("# End Date")
 dl_twt_col, load_twt_col = st.columns(2)
 with dl_twt_col:
-    input_submit_button = st.button('Download new tweets')
+    input_submit_button = st.button('Search tweets')
 
 with load_twt_col:
     load_twt_button = st.button('Load existing tweets')
@@ -171,7 +171,7 @@ dl_tweets = pd.DataFrame()
 if input_submit_button:
     # Load Nitter
     with suppress_tqdm():
-        st.write('Loading tweets...')
+        st.write('Getting tweets...')
         scraper = Nitter(log_level=1, skip_instance_check=False)
 
     # Get tweets from Nitter
@@ -182,7 +182,7 @@ if input_submit_button:
     if dl_tweets is not None and not dl_tweets.empty:
         display_tweets(dl_tweets)
     else:
-        st.write('Ooops. Something went wrong. Reload tweets.')
+        st.write('Ooops. Something went wrong. Search tweets again.')
 
 # --- Save tweets to file ---
 if dl_tweets is not None and not dl_tweets.empty:
