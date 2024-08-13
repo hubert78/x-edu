@@ -190,13 +190,18 @@ if input_submit_button:
 
 # When the Load existing tweets button is clicked. 
 if load_twt_button:
-
-    # Try loading and display the tweets.
     try:
         tweets = pd.read_csv('tweets.csv')
+        unique_contexts = tweets['context'].unique()
+        
+        # Dropdown for filtering by context
+        selected_context = st.selectbox('Filter by context:', ['All'] + list(unique_contexts))
+
+        if selected_context != 'All':
+            tweets = tweets[tweets['context'] == selected_context]
+        
         display_tweets(tweets)
     except FileNotFoundError:
-        # If file does not exist, create an empty DataFrame
         st.write('Oooops. Something went wrong')
         
         
