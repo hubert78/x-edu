@@ -200,19 +200,22 @@ if load_twt_button:
 
 # Filter and display loaded tweets based on context
 if not st.session_state.loaded_tweets.empty:
-    unique_contexts = st.session_state.loaded_tweets['context'].unique()
-    
-    # Dropdown for filtering by context
-    selected_context = st.selectbox('Filter by context:', ['All'] + list(unique_contexts))
-
-    if selected_context != 'All':
-        filtered_tweets = st.session_state.loaded_tweets[st.session_state.loaded_tweets['context'] == selected_context]
-    else:
-        filtered_tweets = st.session_state.loaded_tweets
-
-    filtered_tweets.sort_values(by='date', ascending=False, inplace=True)
-    display_tweets(filtered_tweets)
+    try:
+        unique_contexts = st.session_state.loaded_tweets['context'].unique()
         
+        # Dropdown for filtering by context
+        selected_context = st.selectbox('Filter by context:', ['All'] + list(unique_contexts))
+    
+        if selected_context != 'All':
+            filtered_tweets = st.session_state.loaded_tweets[st.session_state.loaded_tweets['context'] == selected_context]
+        else:
+            filtered_tweets = st.session_state.loaded_tweets
+    
+        filtered_tweets.sort_values(by='date', ascending=False, inplace=True)
+        display_tweets(filtered_tweets)
+        
+    except:
+        st.write('Oooops. Something went wrong')        
 
 
 
