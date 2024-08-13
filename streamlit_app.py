@@ -48,11 +48,11 @@ def get_tweets(term, mode, num, since, until, context):
         tweet_data = [
             tweet['user']['username'], tweet['user']['name'], tweet['user']['avatar'],
             tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'],
-            tweet['pictures'], context, False]
+            tweet['pictures'], 'None', context, False]
         final_tweets.append(tweet_data)
     
     columns = [
-        'username', 'name', 'avatar', 'link', 'text', 'date', 'likes', 'pictures', 'context', 'Deleted'
+        'username', 'name', 'avatar', 'link', 'text', 'date', 'likes', 'pictures', 'keyword', 'context', 'Deleted'
     ]
     # Creating a DataFrame and Converting the str date to datetime. Then sort it in descending order
     tweets = pd.DataFrame(final_tweets, columns=columns)
@@ -157,8 +157,8 @@ with load_twt_col:
     load_twt_button = st.button('Load existing tweets')
 
 # State management for save button
-if 'save_button' not in st.session_state:
-    st.session_state.save_button = pd.DataFrame()
+if 'save_tweet' not in st.session_state:
+    st.session_state.save_tweet = pd.DataFrame()
 
 # State management for 'loaded_tweets'
 if 'loaded_tweets' not in st.session_state:
@@ -178,21 +178,25 @@ if input_submit_button:
 
     # Check to see if there is a dataframe for the tweets and display them
     if dl_tweets is not None and not dl_tweets.empty:
-        st.session_state.save_button = dl_tweets
+        st.session_state.save_tweet = dl_tweets
         display_tweets(dl_tweets)
     else:
         st.write('Ooops. Something went wrong. Search tweets again.')
 
 # --- Save tweets to file ---
-if 'save_button' in st.session_state and not None and not st.session_state.save_button.empty:
-    save_twt_selector, save_twt_button = st.columns(2)
-    with save_twt_selector = st.selectbox('Filter by context:', ['All'] + list(unique_contexts))
-
-
+if 'save_tweet' in st.save_tweet and not None and not st.session_state.save_tweet.empty:
+    keyword_selector, save_twt_button = st.columns(2)
     
-    if st.button('Save tweets'):
-        append_to_csv(st.session_state.save_button, 'tweets.csv')  
-        st.write('Tweets saved')  
+    save_keywords = st.session_state.save_tweet['keyword'].unique()
+    with keyword_selector: 
+        selected_keyword = create_dropdown_with_custom_option('Select a keyword. Example: Biology', save_keywords)
+        st.session_state.save_tweet['keyword'] = st.session_state.save_tweet['keyword'].replace({'None':selected_keyword})
+
+
+    with save_twt_button:
+        if st.button('Save tweets'):
+            append_to_csv(st.session_state.save_tweet, 'tweets.csv')  
+            st.write('Tweets saved')  
 
 
 
