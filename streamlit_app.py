@@ -181,12 +181,11 @@ if input_submit_button:
     # Check to see if there is a dataframe for the tweets and display them
     if dl_tweets is not None and not dl_tweets.empty:
         display_tweets(dl_tweets)
-        
     else:
         st.write('Ooops. Something went wrong. Reload tweets.')
 
 # --- Save tweets to file ---
-if not dl_tweets.empty:
+if dl_tweets is not None and not dl_tweets.empty:
     if st.button('Save tweets'):
         st.write('Saving tweets to file...')  # Debugging statement
         append_to_csv(dl_tweets, 'tweets.csv')   
