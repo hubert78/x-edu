@@ -48,11 +48,11 @@ def get_tweets(term, mode, num, since, until, context):
         tweet_data = [
             tweet['user']['username'], tweet['user']['name'], tweet['user']['avatar'],
             tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'],
-            tweet['pictures']]
+            tweet['pictures'], False]
         final_tweets.append(tweet_data)
     
     columns = [
-        'username', 'name', 'avatar', 'link', 'text', 'date', 'likes', 'pictures'
+        'username', 'name', 'avatar', 'link', 'text', 'date', 'likes', 'pictures', 'Deleted'
     ]
     
     return pd.DataFrame(final_tweets, columns=columns)
@@ -74,7 +74,8 @@ def display_tweets(tweets_df):
         <p style="margin-top: 10px;">{text}</p>
         <div style="margin-top: 10px;">
             <a href="{link}" target="_blank" style="color: #1da1f2;">View Tweet</a> • 
-            <span style="color: #657786;">{likes} Likes</span>
+            <span style="color: #657786;">{likes} Likes</span> • 
+            <a href="#" onclick="window.parent.postMessage({id: '{id}'}, '*');" style="color: #e0245e;">Delete Tweet</a>
         </div>
     </div>
     """
@@ -82,19 +83,31 @@ def display_tweets(tweets_df):
     # Loop through each tweet in the DataFrame and format it using the template
     tweets_html = ""
     for _, row in tweets_df.iterrows():
-        tweet_html = tweet_template.format(
-            avatar=row['avatar'],
-            username=row['username'],
-            userid=row['name'],  # Assuming userid and username are the same
-            date=row['date'],
-            text=row['text'],
-            link=row['link'],
-            likes=row['likes']
-        )
-        tweets_html += tweet_html
+        if not row['Deleted']:
+            tweet_html = tweet_template.format(
+                avatar=row['avatar'],
+                username=row['username'],
+                userid=row['name'],
+                date=row['date'],
+                text=row['text'],
+                link=row['link'],
+                likes=row['likes'],
+                id=row.name  # Use row index as unique ID
+            )
+            tweets_html += tweet_html
 
     # Display the tweets HTML in Streamlit
     st.markdown(tweets_html, unsafe_allow_html=True)
+
+
+# Function to delete a tweet
+def delete_tweet(tweet_id, tweets_df):
+    tweets_df.loc[tweet_id, 'Deleted'] = True
+
+# Streamlit callback to handle messages from the frontend
+def handle_message(message):
+    tweet_id = message['data']
+    delete_tweet(tweet_id, tweets_df)
 
 
 
@@ -124,9 +137,14 @@ if input_submit_button:
     tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
     display_tweets(tweets)
 
-
-
-
+    # Streamlit message handler
+    st.write('<script>'
+             'window.addEventListener("message", function(event) {'
+             '   if (event.data) {'
+             '       window.parent.postMessage(event.data, "*");'
+             '   }'
+             '});'
+             '</script>', unsafe_allow_html=True)
 
 
 
