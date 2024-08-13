@@ -152,7 +152,7 @@ start_date = st.date_input("# Start Date")
 end_date = st.date_input("# End Date")
 dl_twt_col, load_twt_col = st.columns(2)
 with dl_twt_col:
-    input_submit_button = st.button('Search tweets')
+    input_submit_button = st.button('Search for tweets')
 
 with load_twt_col:
     load_twt_button = st.button('Load existing tweets')
