@@ -56,10 +56,11 @@ def get_tweets(term, mode, num, since, until, context):
     ]
     # Creating a DataFrame and Converting the str date to datetime. Then sort it in descending order
     tweets = pd.DataFrame(final_tweets, columns=columns)
-    tweets['date'] = pd.to_datetime(tweets['date'], format='%b %d, %Y · %I:%M %p UTC', utc=True)
-    tweets['date'] = tweets['date'].dt.strftime('%b %d, %Y')
+    tweets['datetime'] = pd.to_datetime(tweets['date'], format='%b %d, %Y · %I:%M %p UTC', utc=True)
 
-    tweets.sort_values(by='date', ascending=False, inplace=True)
+    tweets['date'] = tweets['datetime'].dt.strftime('%b %d, %Y')
+
+    tweets.sort_values(by='datetime', ascending=False, inplace=True)
     return tweets
 
 
@@ -195,7 +196,7 @@ if input_submit_button:
 if load_twt_button:
     try:
         tweets = pd.read_csv('tweets.csv')
-        tweets.sort_values(by='date', ascending=False, inplace=True)
+        #tweets.sort_values(by='date', ascending=False, inplace=True)
         st.session_state.loaded_tweets = tweets
     except FileNotFoundError:
         st.write('Oooops. Something went wrong')
@@ -212,6 +213,7 @@ if not st.session_state.loaded_tweets.empty:
     else:
         filtered_tweets = st.session_state.loaded_tweets
 
+    filtered_tweets.sort_values(by='date', ascending=False, inplace=True)
     display_tweets(filtered_tweets)
         
 
