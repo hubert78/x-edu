@@ -140,7 +140,12 @@ def append_to_csv(df, file_path):
 
 
 # APPLICATION STARTS HERE
-st.title('College Application Support', horizontal_allignment='center')
+st.markdown(
+    """
+    <h1 style="text-align: center;">College Application Support</h1>
+    """,
+    unsafe_allow_html=True
+)
 
 options = ['College admissions', 'Application fee waiver', 'Cold email', 'Other']
 #configure()
