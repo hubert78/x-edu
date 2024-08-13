@@ -71,7 +71,7 @@ def display_tweets(tweets_df):
         <div style="display: flex; align-items: center;">
             <img src="{avatar}" alt="{username}" style="border-radius: 50%; width: 50px; height: 50px; margin-right: 10px;">
             <div>
-                <strong>{username}</strong> <span style="color: #657786;">@{userid}</span>
+                <strong>{name}</strong> <span style="color: #657786;">{username}</span>
                 <br>
                 <span style="color: #657786;">{date}</span>
             </div>
@@ -91,7 +91,7 @@ def display_tweets(tweets_df):
             tweet_html = tweet_template.format(
                 avatar=row['avatar'],
                 username=row['username'],
-                userid=row['name'],
+                name=row['name'],
                 date=row['date'],
                 text=row['text'],
                 link=row['link'],
