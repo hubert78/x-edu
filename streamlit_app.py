@@ -135,6 +135,9 @@ if input_submit_button:
         scraper = Nitter(log_level=1, skip_instance_check=False)
 
     tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
+
+    st.write(tweets)
+    
     if tweets is not None:
         display_tweets(tweets)
 
