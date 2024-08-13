@@ -48,7 +48,7 @@ def get_tweets(term, mode, num, since, until, context):
         tweet_data = [
             tweet['user']['username'], tweet['user']['name'], tweet['user']['avatar'],
             tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'],
-            tweet['pictures'], 'False']
+            tweet['pictures'], False]
         #print(tweet_data)
         final_tweets.append(tweet_data)
     
@@ -137,8 +137,6 @@ if input_submit_button:
         scraper = Nitter(log_level=1, skip_instance_check=False)
 
     tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
-
-    st.write(tweets)
     
     if tweets is not None:
         display_tweets(tweets)
