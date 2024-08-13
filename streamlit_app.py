@@ -165,7 +165,6 @@ if 'save_button' not in st.session_state:
 if 'loaded_tweets' not in st.session_state:
     st.session_state.loaded_tweets = pd.DataFrame()
 
-dl_tweets = pd.DataFrame()
 
 # When  Input Submission Button is clicked
 if input_submit_button:
@@ -180,15 +179,16 @@ if input_submit_button:
 
     # Check to see if there is a dataframe for the tweets and display them
     if dl_tweets is not None and not dl_tweets.empty:
+        st.session_state.save_button = dl_tweets
         display_tweets(dl_tweets)
     else:
         st.write('Ooops. Something went wrong. Search tweets again.')
 
 # --- Save tweets to file ---
-if dl_tweets is not None and not dl_tweets.empty:
+if 'save_button' in st.session_state and not st.session_state.save_button.empty:
     if st.button('Save tweets'):
         st.write('Saving tweets to file...')  # Debugging statement
-        append_to_csv(dl_tweets, 'tweets.csv')   
+        append_to_csv(st.session_state.save_button, 'tweets.csv')   
         
         # Check if file exists and display confirmation
         if os.path.exists('tweets.csv'):
