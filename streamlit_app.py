@@ -227,13 +227,13 @@ if input_submit_button:
         if save_dl_twts:
             append_to_csv(tweets)
 
-        # /////////////////////////////////////////////////////////////////////
-        try:
-            existing_data = pd.read_csv('tweets.csv')
-            st.write('Tweets saved')
-        except FileNotFoundError:
-            # If file does not exist, create an empty DataFrame          
-            st.write('Something went wrong')        
+            # /////////////////////////////////////////////////////////////////////
+            try:
+                existing_data = pd.read_csv('tweets.csv')
+                st.write('Tweets saved')
+            except FileNotFoundError:
+                # If file does not exist, create an empty DataFrame          
+                st.write('Something went wrong')        
     else:
         st.write('Ooops. Something went wrong. Reload tweets.')
 
