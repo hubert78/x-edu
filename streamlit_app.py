@@ -67,7 +67,7 @@ def get_tweets(term, mode, num, since, until, context):
 def display_tweets(tweets_df):
     tweet_template = """
     <div style="border: 1px solid #e1e8ed; border-radius: 10px; padding: 15px; margin-bottom: 10px; background-color: #ffffff;">
-        <div style="display: flex; align-items: center;">
+        <div style="display: flex; align-items: flex-start;">
             <img src="{avatar}" alt="{username}" style="border-radius: 50%; width: 50px; height: 50px; margin-right: 10px;">
             <div>
                 <strong>{name}</strong> <span style="color: #657786;">{username}</span> • <span style="color: #657786;">{date}</span>
