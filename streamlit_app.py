@@ -30,7 +30,7 @@ def create_dropdown_with_custom_option(label, options):
         custom_option = st.text_input('Please specify:')
 
         if custom_option:
-            option.append(custom_option)
+            options.append(custom_option)
             return custom_option
         else:
             return 'None'
