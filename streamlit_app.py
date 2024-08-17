@@ -9,8 +9,8 @@ import os
 import contextlib
 from dotenv import load_dotenv
 
-def configure():
-    load_dotenv()
+config = toml.load("config.toml")
+api_key = config["api"]["api_key"]
 
 # Function to suppress the sys print output of ntscraper
 @contextlib.contextmanager
@@ -44,7 +44,7 @@ def get_tweets(term, mode, num, since, until, context):
     
     final_tweets = []
     for tweet in tweets['tweets']:
-        #if openai_feedback(tweet['text'], context) == 'True':
+        if openai_feedback(tweet['text'], context) == 'True':
         tweet_data = [
             tweet['user']['username'], tweet['user']['name'], tweet['user']['avatar'],
             tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'],
