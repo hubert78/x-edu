@@ -10,7 +10,7 @@ import toml
 import contextlib
 from dotenv import load_dotenv
 
-config = toml.load("config.toml")
+config = toml.load(".toml")
 api_key = config["api"]["api_key"]
 
 # Function to suppress the sys print output of ntscraper
