@@ -210,9 +210,9 @@ if dl_tweets is not None and not dl_tweets.empty:
     selected_keyword = create_dropdown_with_custom_option('Select or enter a keyword. Example: Biology', save_keywords)
     dl_tweets['keyword'] = dl_tweets['keyword'].replace({'None':selected_keyword})
 
-    if st.button('Save tweets', onclick=append_to_csv, args=dl_tweets):
-        #append_to_csv(dl_tweets, 'tweets.csv')  
-        st.write('Tweets saved') 
+    st.button('Save tweets', onclick=append_to_csv, args=dl_tweets):
+    #append_to_csv(dl_tweets, 'tweets.csv')  
+    st.write('Tweets saved') 
     
 elif dl_tweets is None or dl_tweets.empty and nittered is True:
     st.write('Failed to get tweets from Twitter. Search again.')
