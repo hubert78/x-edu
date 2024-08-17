@@ -165,7 +165,7 @@ if 'loaded_tweets' not in st.session_state:
     st.session_state.loaded_tweets = pd.DataFrame()
 
 dl_tweets = pd.DataFrame()
-nittered = False
+nittered = 0
 
 # When  Input Submission Button is clicked
 if input_submit_button:
@@ -176,10 +176,10 @@ if input_submit_button:
 
     # Get tweets from Nitter
     dl_tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
-    nittered = True
+    nittered = 1
 
 # Check to see if there is a dataframe for the tweets and display them
-if dl_tweets is not None and not dl_tweets.empty and nittered == True:
+if dl_tweets is not None and not dl_tweets.empty and nittered == 1:
     st.session_state.save_tweet = dl_tweets
     display_tweets(dl_tweets)
 
