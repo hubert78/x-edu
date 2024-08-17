@@ -112,7 +112,7 @@ def handle_message(message):
     delete_tweet(tweet_id, tweets_df)
 
 
-def append_to_csv(tweets, file_path='tweets.csv'):
+def append_to_csv(tweets):
     """
     Appends info_data to a CSV file, ensuring no tweet URL is duplicated.
     
@@ -122,6 +122,8 @@ def append_to_csv(tweets, file_path='tweets.csv'):
     """
     
     # Read existing data from the CSV file
+    
+    file_path='tweets.csv'
     try:
         existing_data = pd.read_csv(file_path)
     except FileNotFoundError:
@@ -211,8 +213,8 @@ if dl_tweets is not None and not dl_tweets.empty:
     selected_keyword = create_dropdown_with_custom_option('Select or enter a keyword. Example: Biology', save_keywords)
     dl_tweets['keyword'] = dl_tweets['keyword'].replace({'None':selected_keyword})
 
-    if st.button('Save tweets'):
-        append_to_csv(st.session_state.save_tweet, 'tweets.csv')  
+    if st.button('Save tweets', onclick=append_to_csv, args=dl_tweets):
+        #append_to_csv(dl_tweets, 'tweets.csv')  
         st.write('Tweets saved') 
     
 elif dl_tweets is None or dl_tweets.empty and nittered is True:
