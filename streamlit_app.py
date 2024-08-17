@@ -168,10 +168,10 @@ options = ['College admissions', 'Application fee waiver', 'Cold email', 'Other'
 
 # Get keywords/hastags, tweet_count and date range(start and end)
 keywords = st.text_input('Enter Keywords')
-context = create_dropdown_with_custom_option('Select tweet context', options)
+context = create_dropdown_with_custom_option('Select tweet context for AI search', options)
 tweet_count = st.slider("# Number of Tweets: ", 1, 20, 10)
-start_date = st.date_input("# Start Date")
-end_date = st.date_input("# End Date")
+start_date = st.date_input("Start Date")
+end_date = st.date_input("End Date")
 dl_twt_col, load_twt_col = st.columns(2)
 with dl_twt_col:
     input_submit_button = st.button('Search for tweets')
