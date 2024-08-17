@@ -193,6 +193,8 @@ if input_submit_button:
         with suppress_tqdm():
             scraper = Nitter(log_level=1, skip_instance_check=False)
             st.write(scraper)
+        if scraper.cooldown_count == 0:
+            st.write('This is not good')
             
     with st.spinner('Checking received data...'):
         # Get tweets from Nitter
