@@ -179,7 +179,7 @@ if input_submit_button:
     nittered = True
 
 # Check to see if there is a dataframe for the tweets and display them
-if dl_tweets is not None and not dl_tweets.empty and nittered is True:
+if dl_tweets is not None and not dl_tweets.empty and nittered == True:
     st.session_state.save_tweet = dl_tweets
     display_tweets(dl_tweets)
 
