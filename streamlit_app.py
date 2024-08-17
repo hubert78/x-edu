@@ -112,13 +112,36 @@ def handle_message(message):
     delete_tweet(tweet_id, tweets_df)
 
 
-# Function to append tweets to an existing tweet.csv file
-def append_to_csv(df, file_path):
+def append_to_csv(tweets, file_path='tweets.csv'):
+    """
+    Appends info_data to a CSV file, ensuring no tweet URL is duplicated.
+    
+    Parameters:
+    - tweets: DataFrame containing tweet data to append.
+    - file_path: Path to the CSV file where data will be appended.
+    """
+    
+    # Read existing data from the CSV file
     try:
-        df.to_csv(file_path, mode='w', header=True, index=False)
-        st.write('Tweets successfully saved.')
-    except Exception as e:
-        st.write(f"An error occurred while saving the file: {e}")
+        existing_data = pd.read_csv(file_path)
+    except FileNotFoundError:
+        # If file does not exist, create an empty DataFrame
+        existing_data = pd.DataFrame(columns=tweets.columns)
+    
+    # Check for duplicate URLs in the existing data
+    if 'link' in existing_data.columns:
+        existing_links = existing_data['link'].tolist()
+    else:
+        existing_links = []
+
+    # Filter out duplicate rows based on 'link' column
+    new_data = tweets[~info_data['link'].isin(existing_links)]
+    
+    # Append the new data to the existing data
+    updated_data = pd.concat([existing_data, new_data], ignore_index=True)
+    
+    # Save the updated data back to the CSV file
+    updated_data.to_csv(file_path, index=False)
 
 
 
