@@ -6,6 +6,7 @@ from ntscraper import Nitter
 import openai
 import sys
 import os
+import toml
 import contextlib
 from dotenv import load_dotenv
 
