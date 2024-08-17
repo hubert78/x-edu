@@ -193,10 +193,10 @@ nittered = 0
 # When  Input Submission Button is clicked
 if input_submit_button:
     with st.spinner('Fetching tweets...'):
+        
         # Load Nitter
-        #with suppress_tqdm():
-            #st.write('Fetching tweets...')
-        scraper = Nitter(log_level=1, skip_instance_check=False)
+        with suppress_tqdm():
+            scraper = Nitter(log_level=1, skip_instance_check=False)
     
         # Get tweets from Nitter
         dl_tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
