@@ -162,7 +162,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-options = ['College admissions', 'Application fee waiver', 'Cold email']
+options = ['College admissions', 'Application fee waiver', 'Cold email', 'Other']
 #configure()
 
 
