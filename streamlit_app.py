@@ -183,7 +183,6 @@ if 'save_tweet' not in st.session_state:
 if 'loaded_tweets' not in st.session_state:
     st.session_state.loaded_tweets = pd.DataFrame()
 
-scraper = set()
 dl_tweets = pd.DataFrame()
 nittered = False
 
@@ -193,6 +192,7 @@ if input_submit_button:
         # Load Nitter
         with suppress_tqdm():
             scraper = Nitter(log_level=1, skip_instance_check=False)
+            st.write(type(scraper))
             
     with st.spinner('Checking received data...'):
         # Get tweets from Nitter
@@ -216,7 +216,7 @@ if dl_tweets is not None and not dl_tweets.empty:
 elif dl_tweets is None or dl_tweets.empty and nittered is True:
     st.write('Failed to get tweets from Twitter. Search again.')
 
-st.write(type(scraper))
+
 
 # --- Save tweets to file ---
 
