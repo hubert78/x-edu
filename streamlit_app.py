@@ -155,12 +155,8 @@ def append_to_csv(tweets, file_path='tweets.csv'):
 
 
 # APPLICATION STARTS HERE
-st.markdown(
-    """
-    <h1 style="text-align: center;">College Application Support</h1>
-    """,
-    unsafe_allow_html=True
-)
+st.title("College Application Support")
+st.markdown("<style>h1 {text-align: center;}</style>", unsafe_allow_html=True)
 
 options = ['College admissions', 'Application fee waiver', 'Cold email', 'Other']
 #configure()
