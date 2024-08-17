@@ -193,7 +193,7 @@ if dl_tweets is not None and not dl_tweets.empty:
         append_to_csv(st.session_state.save_tweet, 'tweets.csv')  
         st.write('Tweets saved') 
     
-elif dl_tweets is None and dl_tweets.empty and nittered == 1:
+elif dl_tweets is None or dl_tweets.empty and nittered == 1:
     st.write('Ooops. Something went wrong. Search tweets again.')
 
 # --- Save tweets to file ---
