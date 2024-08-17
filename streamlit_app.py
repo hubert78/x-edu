@@ -187,7 +187,7 @@ if dl_tweets is not None and not dl_tweets.empty and nittered == True:
     save_keywords = ['Biology', 'Computer Science', 'Essays', 'Other']
     #with keyword_selector: 
     selected_keyword = create_dropdown_with_custom_option('Select or enter a keyword. Example: Biology', save_keywords)
-    st.dl_tweet['keyword'] = dl_tweet['keyword'].replace({'None':selected_keyword})
+    st.dl_tweet['keyword'] = dl_tweets['keyword'].replace({'None':selected_keyword})
 
     if st.button('Save tweets'):
         append_to_csv(st.session_state.save_tweet, 'tweets.csv')  
