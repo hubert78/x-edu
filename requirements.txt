@@ -7,6 +7,6 @@ datetime
 ntscraper
 tqdm
 python-dotenv
-
+toml
 
 
