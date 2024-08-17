@@ -215,7 +215,7 @@ if dl_tweets is not None and not dl_tweets.empty:
 elif dl_tweets is None or dl_tweets.empty and nittered is True:
     st.write('Failed to get tweets from Twitter. Search again.')
 
-st.write(dtype(scraper))
+st.write(type(scraper))
 
 # --- Save tweets to file ---
 
