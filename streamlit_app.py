@@ -179,7 +179,7 @@ if input_submit_button:
     nittered = 1
 
 # Check to see if there is a dataframe for the tweets and display them
-if dl_tweets is not None and not dl_tweets.empty and nittered == 1:
+if dl_tweets is not None and not dl_tweets.empty:
     st.session_state.save_tweet = dl_tweets
     display_tweets(dl_tweets)
 
@@ -193,7 +193,7 @@ if dl_tweets is not None and not dl_tweets.empty and nittered == 1:
         append_to_csv(st.session_state.save_tweet, 'tweets.csv')  
         st.write('Tweets saved') 
     
-else:
+elif dl_tweets is None and dl_tweets.empty and nittered == 1:
     st.write('Ooops. Something went wrong. Search tweets again.')
 
 # --- Save tweets to file ---
