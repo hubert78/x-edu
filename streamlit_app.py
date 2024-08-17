@@ -164,7 +164,7 @@ if 'save_tweet' not in st.session_state:
 if 'loaded_tweets' not in st.session_state:
     st.session_state.loaded_tweets = pd.DataFrame()
 
-dl_tweets = [
+dl_tweets = []
 
 # When  Input Submission Button is clicked
 if input_submit_button:
