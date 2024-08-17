@@ -45,11 +45,11 @@ def get_tweets(term, mode, num, since, until, context):
     final_tweets = []
     for tweet in tweets['tweets']:
         if openai_feedback(tweet['text'], context) == 'True':
-        tweet_data = [
-            tweet['user']['username'], tweet['user']['name'], tweet['user']['avatar'],
-            tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'],
-            tweet['pictures'], 'None', context, False]
-        final_tweets.append(tweet_data)
+            tweet_data = [
+                tweet['user']['username'], tweet['user']['name'], tweet['user']['avatar'],
+                tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'],
+                tweet['pictures'], 'None', context, False]
+            final_tweets.append(tweet_data)
     
     columns = [
         'username', 'name', 'avatar', 'link', 'text', 'date', 'likes', 'pictures', 'keyword', 'context', 'Deleted'
