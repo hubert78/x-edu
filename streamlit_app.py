@@ -164,6 +164,7 @@ if 'save_tweet' not in st.session_state:
 if 'loaded_tweets' not in st.session_state:
     st.session_state.loaded_tweets = pd.DataFrame()
 
+dl_tweets = [
 
 # When  Input Submission Button is clicked
 if input_submit_button:
@@ -175,25 +176,25 @@ if input_submit_button:
     # Get tweets from Nitter
     dl_tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
 
-    # Check to see if there is a dataframe for the tweets and display them
-    if dl_tweets is not None and not dl_tweets.empty:
-        st.session_state.save_tweet = dl_tweets
-        display_tweets(dl_tweets)
-    else:
-        st.write('Ooops. Something went wrong. Search tweets again.')
+# Check to see if there is a dataframe for the tweets and display them
+if dl_tweets is not None and not dl_tweets.empty:
+    st.session_state.save_tweet = dl_tweets
+    display_tweets(dl_tweets)
 
-# --- Save tweets to file ---
-if 'save_tweet' in st.session_state and not None and not st.session_state.save_tweet.empty:
     keyword_selector, save_twt_button = st.columns(2)
-    
     save_keywords = ['Biology', 'Computer Science', 'Essays', 'Other']
     #with keyword_selector: 
     selected_keyword = create_dropdown_with_custom_option('Select or enter a keyword. Example: Biology', save_keywords)
-    st.session_state.save_tweet['keyword'] = st.session_state.save_tweet['keyword'].replace({'None':selected_keyword})
+    st.dl_tweet['keyword'] = dl_tweet['keyword'].replace({'None':selected_keyword})
 
     if st.button('Save tweets'):
         append_to_csv(st.session_state.save_tweet, 'tweets.csv')  
-        st.write('Tweets saved')  
+        st.write('Tweets saved') 
+    
+else:
+    st.write('Ooops. Something went wrong. Search tweets again.')
+
+# --- Save tweets to file ---
 
 
 
