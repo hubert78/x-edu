@@ -171,7 +171,7 @@ nittered = False
 if input_submit_button:
     # Load Nitter
     with suppress_tqdm():
-        st.write('Getting tweets...')
+        st.write('Fetching tweets...')
         scraper = Nitter(log_level=1, skip_instance_check=False)
 
     # Get tweets from Nitter
