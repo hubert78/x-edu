@@ -145,7 +145,7 @@ options = ['College admissions', 'Application fee waiver', 'Cold email']
 
 # Get keywords/hastags, tweet_count and date range(start and end)
 keywords = st.text_input('Enter Keywords')
-context = create_dropdown_with_custom_option('Select an option', options)
+context = create_dropdown_with_custom_option('Select tweet context', options)
 tweet_count = st.slider("# Number of Tweets: ", 1, 20, 10)
 start_date = st.date_input("# Start Date")
 end_date = st.date_input("# End Date")
@@ -165,6 +165,7 @@ if 'loaded_tweets' not in st.session_state:
     st.session_state.loaded_tweets = pd.DataFrame()
 
 dl_tweets = pd.DataFrame()
+nittered = False
 
 # When  Input Submission Button is clicked
 if input_submit_button:
@@ -175,9 +176,10 @@ if input_submit_button:
 
     # Get tweets from Nitter
     dl_tweets = get_tweets(keywords, 'term', tweet_count, str(start_date), str(end_date), context)
+    nittered = True
 
 # Check to see if there is a dataframe for the tweets and display them
-if dl_tweets is not None and not dl_tweets.empty:
+if dl_tweets is not None and not dl_tweets.empty and nittered is True:
     st.session_state.save_tweet = dl_tweets
     display_tweets(dl_tweets)
 
