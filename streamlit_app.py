@@ -204,14 +204,13 @@ if input_submit_button:
 
 # Check to see if there is a dataframe for the tweets and display them
 if dl_tweets is not None and not dl_tweets.empty:
-    st.session_state.save_tweet = dl_tweets
     display_tweets(dl_tweets)
 
     keyword_selector, save_twt_button = st.columns(2)
     save_keywords = ['Biology', 'Computer Science', 'Essays', 'Other']
     #with keyword_selector: 
     selected_keyword = create_dropdown_with_custom_option('Select or enter a keyword. Example: Biology', save_keywords)
-    st.dl_tweets['keyword'] = dl_tweets['keyword'].replace({'None':selected_keyword})
+    dl_tweets['keyword'] = dl_tweets['keyword'].replace({'None':selected_keyword})
 
     if st.button('Save tweets'):
         append_to_csv(st.session_state.save_tweet, 'tweets.csv')  
