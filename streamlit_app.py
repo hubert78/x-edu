@@ -43,7 +43,7 @@ def nittered():
         # Load Nitter
         with suppress_tqdm():
             scraper = Nitter(log_level=1, skip_instance_check=False)
-            return scrapper
+            return scraper
 
 
 # Function to get tweets in a DataFrame
