@@ -37,13 +37,6 @@ def create_dropdown_with_custom_option(label, options):
     else:
         return selected_option
 
-@st.cache_data
-def nittered():
-    with st.spinner('Fetching tweets...'):
-        # Load Nitter
-        with suppress_tqdm():
-            scraper = Nitter(log_level=1, skip_instance_check=False)
-            return scraper
 
 
 # Function to get tweets in a DataFrame
@@ -196,7 +189,10 @@ nit = False
 
 # When  Input Submission Button is clicked
 if input_submit_button:
-    scraper = nittered()
+    with st.spinner('Fetching tweets...'):
+        # Load Nitter
+        with suppress_tqdm():
+            scraper = Nitter(log_level=1, skip_instance_check=False)
             
     with st.spinner('Checking received data...'):
         # Get tweets from Nitter
