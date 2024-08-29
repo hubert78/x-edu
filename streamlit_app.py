@@ -37,7 +37,7 @@ def create_dropdown_with_custom_option(label, options):
     else:
         return selected_option
 
-@st.cached_data
+@st.cache_data
 def nittered():
     with st.spinner('Fetching tweets...'):
         # Load Nitter
