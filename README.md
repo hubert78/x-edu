@@ -1,4 +1,4 @@
-#  [X Scrapping App For College Application](https://x-edu-app.streamlit.app/)
+#  [College Application Support App](https://x-edu-app.streamlit.app/)
 
 ### OVERVIEW
 This is a streamlit web application to help myself and friends gather, analyze, and quickly access important college application information found on X (formerly Twitter). 
